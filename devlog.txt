@@ -1,2 +1,9 @@
 mayaM -- 2023-05-03 07:12
 Added first draft of design doc and addeed roles in README
+
+mayaM -- 2023-05-03 15:54
+Design doc feedback: needs more info about the map and what part will be
+interactive, how is Pandas going to fit in
+
+Changed the dataset from bigfoot to CitiBike in design doc, updated the
+database descriptions, and made the overview more comprehensive
