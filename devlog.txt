@@ -1,0 +1,2 @@
+mayaM -- 2023-05-03 07:12
+Added first draft of design doc and addeed roles in README
