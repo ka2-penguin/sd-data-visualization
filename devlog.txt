@@ -7,3 +7,6 @@ interactive, how is Pandas going to fit in
 
 Changed the dataset from bigfoot to CitiBike in design doc, updated the
 database descriptions, and made the overview more comprehensive
+
+mayaM -- 2023-05-04 07:02
+Database tables and controls revised on design doc
