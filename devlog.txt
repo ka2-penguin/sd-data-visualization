@@ -10,3 +10,6 @@ database descriptions, and made the overview more comprehensive
 
 mayaM -- 2023-05-04 07:02
 Database tables and controls revised on design doc
+
+mayaM -- 2023-05-05 09:51
+can transfer data from csv files to SQLite database
