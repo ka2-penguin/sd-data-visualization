@@ -13,3 +13,7 @@ Database tables and controls revised on design doc
 
 mayaM -- 2023-05-05 09:51
 can transfer data from csv files to SQLite database
+
+mayaM -- 2023-05-06 15:35
+- wrote script to download and expand data
+- added gitignore
