@@ -17,3 +17,6 @@ can transfer data from csv files to SQLite database
 mayaM -- 2023-05-06 15:35
 - wrote script to download and expand data
 - added gitignore
+
+mayaM -- 2023-05-07 18:10
+linked script.js to index.html
