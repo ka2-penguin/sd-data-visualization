@@ -114,6 +114,7 @@ venv.bak/
 
 # OS X Files #
 .DS_Store
+*/.DS_Store
 ._*
 _*
 .Spotlight*
