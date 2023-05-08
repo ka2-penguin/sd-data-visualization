@@ -59,8 +59,9 @@ mayaM -- 2023-05-08 09:30
 worked on getting data from stations table from csv
 ==============================================================
 
-mayaM -- 2023-05-08 16:08
+mayaM -- 2023-05-08 16:27
 --------------------------------------------------------------
-fixed git tracking .DS_Store files
-roles in readme are not all on the same line
+- fixed git tracking .DS_Store files
+- roles in readme are not all on the same line
+- requirements.txt in place
 ==============================================================
