@@ -1,4 +1,7 @@
-body{
+body, html{
+	height: 100%;
+	margin: 0;
+	padding: 0;
 	font-family:Optima, Garamond, serif;
 	background-color:rgba(0,0,200,0.3);
 	background-image:linear-gradient(to top, rgba(0,100,255,0.2), rgba(0,0,255,0.0));
@@ -8,4 +11,8 @@ h1 {
 	font-size:70px;
 	text-align:center;
 	padding:20px;
+}
+
+#map {
+  height: 100%;
 }
