@@ -49,7 +49,7 @@ def db_close():
 def db_table_inits():
     c = db_connect()
 
-    c.execute("CREATE TABLE IF NOT EXISTS stations (station_name text, \
+    c.execute("CREATE TABLE IF NOT EXISTS stations (station_id, station_name text, \
         latitude float, longitude float)")
 
     c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, start_date string, \
@@ -115,14 +115,14 @@ def get_stations(row):
     start_station_name = row[4]
     end_station_name = row[6]
     try:
-        start_lat = float(row[8])
-        start_long = float(row[9])
+        start_lat = round(float(row[8]),3)
+        start_long = round(float(row[9]),3)
     except:
         return ()
 
     try:
-        end_lat = float(row[10])
-        end_long = float(row[11])
+        end_lat = round(float(row[10]),3)
+        end_long = round(float(row[11]),3)
     except:
         return ()
 
@@ -178,6 +178,7 @@ db_table_inits()
 def csv_to_db():
     stations = set()
     station_names = set()
+    # stations_coords = set()     #rounded to the 1000th to avoid duplicates
 
     for filename in FILENAMES:
         filename_with_folder = 'data/' + filename
@@ -192,6 +193,7 @@ def csv_to_db():
 
                 for station in get_stations(row):
                     if station[0] not in station_names:
+                        # rounded_
                         stations.add(station)
                         station_names.add(station[0])
             print(f'got data for {filename[:6]}')
@@ -200,7 +202,18 @@ def csv_to_db():
     add_stations(stations)
 
 if __name__ == '__main__':
-    csv_to_db()
+    # csv_to_db()
+    c = db_connect()
+    station_coords = set(c.execute('SELECT latitude,longitude FROM stations'))
+    db_close()
+
+
+# ideas:
+# stations: name, custom_id, lat, long
+# trips: duration, date, time, start_id, end_id, is_member
+
+    # print(type(station_coords))
+    print(len(station_coords))
     # with open('data/202201-citibike-tripdata.csv') as csv_file:
     #     csv_reader = csv.reader(csv_file, delimiter=',')
     #     # trimmed_data = set()
