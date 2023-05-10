@@ -32,7 +32,7 @@ FILENAMES = (
     '202304-citibike-tripdata.csv',
 )
 
-DB_FILE = "test.db"
+DB_FILE = "data.db"
 
 db = None
 
@@ -107,37 +107,51 @@ def get_stations(row):
         end_long = round(float(row[11]),3)
     except:
         return ()
-
+    # return (start_lat, start_long, end_lat, end_long), start_name, end_name
     return (start_station_name,start_lat, start_long),(end_station_name,end_lat, end_long)
-    
-def add_stations(stations):
-    c = db_connect()
-    try:
-        for station in stations:
-            if station[0] != '':
-                c.execute('INSERT INTO stations VALUES (?,?,?)',station)
-    except:
-    
-        db_close()
-        print(station)
-        raise
-    db_close()
 
-# def add_stations_from_dict(stations):
+# def get_coords(row):
+#     # start_station_name = row[4]
+#     # end_station_name = row[6]
+#     try:
+#         start_lat = round(float(row[8]),3)
+#         start_long = round(float(row[9]),3)
+#         end_lat = round(float(row[10]),3)
+#         end_long = round(float(row[11]),3)
+#     except:
+#         return ()
+
+#     # return (start_lat, start_long, end_lat, end_long), start_name, end_name
+#     return (start_lat, start_long, end_lat, end_long)
+    
+# def add_stations(stations):
 #     c = db_connect()
 #     try:
-#         index = 0
-#         for station in stations.items():
-#             lat,longitude = station[0]
-#             name = station[1]
-#             # if station[0] != '':
-#             c.execute('INSERT INTO stations VALUES (?,?,?)',(name,lat,longitude))
-#             index += 1
+#         for station in stations:
+#             if station[0] != '':
+#                 c.execute('INSERT INTO stations VALUES (?,?,?)',station)
 #     except:
+    
 #         db_close()
 #         print(station)
 #         raise
 #     db_close()
+
+def add_stations_from_dict(stations):
+    c = db_connect()
+    try:
+        index = 0
+        for station in stations.items():
+            lat,longitude = station[0]
+            name = station[1]
+            # if station[0] != '':
+            c.execute('INSERT INTO stations VALUES (?,?,?)',(name,lat,longitude))
+            index += 1
+    except:
+        db_close()
+        print(station)
+        raise
+    db_close()
 
 db_table_inits()
 # print(get_trip_duration('2022-09-10','00:00:00', '2022-09-10', '12:34:56'))
@@ -163,15 +177,129 @@ def faster_get_trip_data(row):
     # print(new_row)
     return new_row
 
+def load_stations_db():
+    # stations = set()
+    stations = dict()
+    # station_names = set()
+    # stations_coords = set()     #rounded to the 1000th to avoid duplicates
+
+    # trimmed_data = []
+    for filename in FILENAMES:
+    # for filename in ['202201-citibike-tripdata.csv',]:
+        filename_with_folder = 'data/' + filename
+        with open(filename_with_folder) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            info_row = next(csv_reader)
+            for row in csv_reader:
+                trip_stations = get_stations(row)
+                for i in range(len(trip_stations)):
+                    station = trip_stations[i]
+                    coord = (station[1],station[2])
+                    name = station[0]
+                    # print(coord)
+                    # coords += coord
+                    if name == '':
+
+                        break
+                    try:
+                        # names = stations[coord]
+                        # shortest_name = get_shortest_name((stations[coord], name))
+                        stations[coord].add(name)
+                    except KeyError:
+                        stations[coord] = {name,}
+                        # stations[coord] = name
+
+            print(f'got data for {filename[:6]}')
+            # print(f'{len(trimmed_data) = }')
+    # add_new_trip(trimmed_data)
+    # print(trimmed_data)
+    print(f'{len(stations) = }')
+
+    coord_to_name = dict()
+    coord_to_id = dict()
+    index = 1                   # rowid starts at 1
+    for coord,names in stations.items():
+        # print(pair)
+        name = get_shortest_name(names)
+        coord_to_name[coord] = name
+        coord_to_id[coord] = index
+        index += 1
+    # print(coord_to_name)
+    # print(coord_to_id)
+
+    add_stations_from_dict(coord_to_name)
+    return coord_to_id
+
+def load_trips(coord_to_id):
+    # stations = set()
+    # stations = dict()
+    # station_names = set()
+    # stations_coords = set()     #rounded to the 1000th to avoid duplicates
+
+    # trimmed_data = []
+    for filename in FILENAMES:
+    # for filename in ['202201-citibike-tripdata.csv',]:
+        trimmed_data = set()
+        filename_with_folder = 'data/' + filename
+        with open(filename_with_folder) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            info_row = next(csv_reader)
+            for row in csv_reader:
+                scrap_trip = False  # if this trip should be ignored
+                # for station in get_stations(row):
+                coords = ()
+                trip_stations = get_stations(row)
+                for i in range(len(trip_stations)):
+                    station = trip_stations[i]
+                    coord = (station[1:])
+                    # name = station[0]
+                    # print(coord)
+                    coords += coord
+                    if station[0] == '':
+                        scrap_trip = True
+                        # print(f'{station}')
+                        break
+                
+                new_row = faster_get_trip_data(row)
+
+                # if new_row[4] != '' and new_row[0] < 60*60*5 and new_row[0] != -1:            # if end station exists
+                if not scrap_trip and new_row[0] < 60*60*5 and new_row[0] != -1 and len(coords) == 4:
+                    trimmed_data.add(new_row+coords)
+                # break
+
+            print(f'got data for {filename[:6]}')
+            # print(f'{len(stations) = }')
+            print(f'{len(trimmed_data) = }')
+        add_trips_with_coords(trimmed_data, coord_to_id)
+        # add_new_trip(trimmed_data)
+    # print(trimmed_data)
+    # print(stations)
+
+    # coord_to_name = dict()
+    # coord_to_id = dict()
+    # index = 1                   # rowid starts at 1
+    # for coord,names in stations.items():
+    #     # print(pair)
+    #     name = get_shortest_name(names)
+    #     coord_to_name[coord] = name
+    #     coord_to_id[coord] = index
+    #     index += 1
+    # # print(coord_to_name)
+    # # print(coord_to_id)
+
+    # add_stations_from_dict(coord_to_name)
+    # # print(f'{trimmed_data = }')
+    # add_trips_with_coords(trimmed_data, coord_to_id)
+
 def csv_to_db():
     # stations = set()
     stations = dict()
     station_names = set()
     # stations_coords = set()     #rounded to the 1000th to avoid duplicates
 
-    # for filename in FILENAMES:
-    trimmed_data = set()
-    for filename in ['202201-citibike-tripdata.csv',]:
+    trimmed_data = []
+    for filename in FILENAMES:
+    # for filename in ['202201-citibike-tripdata.csv',]:
         filename_with_folder = 'data/' + filename
         with open(filename_with_folder) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -214,6 +342,7 @@ def csv_to_db():
 
             print(f'got data for {filename[:6]}')
             print(f'{len(stations) = }')
+            print(f'{len(trimmed_data) = }')
     # add_new_trip(trimmed_data)
     # print(trimmed_data)
     # print(stations)
@@ -234,41 +363,6 @@ def csv_to_db():
     # print(f'{trimmed_data = }')
     add_trips_with_coords(trimmed_data, coord_to_id)
 
-# # {(lat, long):  {name1, name2,...},...}
-# def get_stations_dict():
-#     stations = {}
-#     station_names = set()
-#     for filename in FILENAMES:
-#         filename_with_folder = 'data/' + filename
-#         with open(filename_with_folder) as csv_file:
-#             csv_reader = csv.reader(csv_file, delimiter=',')
-#             trimmed_data = set()
-#             info_row = next(csv_reader)
-#             for row in csv_reader:
-#                 new_row = faster_get_trip_data(row)
-#                 if new_row[4] != '' and new_row[0] < 60*60*5 and new_row[0] != -1:            # if end station exists
-#                     trimmed_data.add(new_row)
-
-#                 for station in get_stations(row):
-#                     if station[0] not in station_names:
-#                         coord = station[1:]
-#                         # print(type(coord))
-#                         try :
-#                             stations[coord].add(station[0])
-#                         except KeyError:
-#                             stations[coord] = {station[0],}
-#                         # stations.add(station)
-#                         station_names.add(station[0])
-#             print(f'got data for {filename[:6]}')
-#             print(f'{len(stations) = }')
-#             # add_new_trip(trimmed_data)
-#     # add_stations(stations)
-#     print(len(stations))
-
-#     for k,v in stations:
-#         if len(v) > 1:
-#             print(k,v)
-
 
 def get_shortest_name(names):
     min_len = 100
@@ -282,13 +376,6 @@ def get_shortest_name(names):
                 shortest_name = name
     # return shortest_name.replace('\\t','HELLO')
     return shortest_name.replace('\\t',' ')
-
-# def get_station_id(lat,longitude):
-#     c = db_connect()
-#     # try:
-#     rowid = c.execute('SELECT rowid from stations where latitude=? and longitude=?',(lat,longitude))
-#     db_close()
-#     return rowid
 
 #{(266, '2022-01-18', '08:23:52', True, 40.688, -73.991, 40.692, -73.993)}
 def add_trips_with_coords(data, coord_to_id):
@@ -304,36 +391,16 @@ def add_trips_with_coords(data, coord_to_id):
             end_id = coord_to_id[(trip[6], trip[7])]
             # print(f'{type(trip[:4]) = }')
             # print(f'{type(start_id) = }')
-            rowid = c.execute('INSERT INTO trips_id_202201 VALUES (?,?,?,?,?,?)',(*trip[:4],start_id,end_id))
+            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?)',(*trip[:4],start_id,end_id))
     except:
         db_close()
         raise
     db_close()
 
 if __name__ == '__main__':
-    csv_to_db()
-    # get_stations_dict()
-    # c = db_connect()
-    # stations_data = tuple(c.execute('SELECT * FROM stations'))
-    # db_close()
-
-    # stations = dict()
-
-    # for name,lat,longitude in stations_data:
-    #     coord = (lat, longitude)
-    #     try :
-    #         stations[coord].add(name)
-    #     except KeyError:
-    #         stations[coord] = {name,}
-    # print(stations)
-
-    # for v in stations.values():
-    #     # v = pair[1]
-    #     # print(pair)
-    #     # print(v)
-    #     if len(v) > 1:
-    #         # print(v)
-    #         print(get_shortest_name(v))
+    # csv_to_db()
+    coord_to_id = load_stations_db()
+    load_trips(coord_to_id)
             
 
 
