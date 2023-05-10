@@ -11,24 +11,25 @@ let map;
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
-  const position = { lat: 40.730610, lng: -73.935242 };
+  const center = { lat: 40.730610, lng: -73.935242 };
+  const radius = .5;
   const zoom = 12;
 
 
 
   map = new Map(document.getElementById("map"), {
-    center: position,
+    center: center,
     zoom: zoom,
     minZoom: zoom - 2,
     maxZoom: zoom + 4,
-    // restriction: {
-    //   latLngBounds: {
-    //     north: -10,
-    //     south: -40,
-    //     east: 160,
-    //     west: 100,
-    //   },
-    // },
+    restriction: {
+      latLngBounds: {
+        north: center["lat"] + radius,
+        south: center["lat"] - radius,
+        east: center["lng"] + radius,
+        west: center["lng"] - radius,
+      },
+    },
   
   });
 } 
