@@ -7,18 +7,35 @@
   });
 
 
-  let map;
-  async function initMap() {
-    //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-    const position = { lat: -34.397, lng: 150.644 };
-    map = new Map(document.getElementById("map"), {
-      center: position,
-      zoom: 8,
-    });
-  } 
+let map;
+async function initMap() {
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
+  const position = { lat: 40.730610, lng: -73.935242 };
+  const zoom = 12;
+
+
+
+  map = new Map(document.getElementById("map"), {
+    center: position,
+    zoom: zoom,
+    minZoom: zoom - 2,
+    maxZoom: zoom + 4,
+    // restriction: {
+    //   latLngBounds: {
+    //     north: -10,
+    //     south: -40,
+    //     east: 160,
+    //     west: 100,
+    //   },
+    // },
   
-  initMap();
+  });
+} 
+
+let button_map = document.getElementById("button_map");
+button_map.addEventListener("click", initMap);
+// initMap();
 
 // let map;
 // async function initMap(): Promise<void> {
