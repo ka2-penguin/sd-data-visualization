@@ -9,9 +9,11 @@ function search() {
   });
 }
 
-db.close();
-
-
+window.addEventListener("beforeunload", function (e) {
+  db.close();
+  (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+  return confirmationMessage;                            //Webkit, Safari, Chrome
+});
 
 
 
@@ -54,3 +56,4 @@ async function initMap() {
 
 let button_map = document.getElementById("button_map");
 button_map.addEventListener("click", initMap);
+
