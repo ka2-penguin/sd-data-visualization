@@ -65,3 +65,11 @@ mayaM -- 2023-05-08 16:27
 - roles in readme are not all on the same line
 - requirements.txt in place
 ==============================================================
+
+mayaM -- 2023-05-10 07:27
+--------------------------------------------------------------
+- our best approach for DATA CONDUIT is to have load_data.py
+load the database once from the csv and use functions in
+read_data.js to get data from data.db and give that to 
+scripts.js, which handles JS on the frontend.
+==============================================================
