@@ -73,3 +73,10 @@ load the database once from the csv and use functions in
 read_data.js to get data from data.db and give that to 
 scripts.js, which handles JS on the frontend.
 ==============================================================
+
+mayaM -- 2023-05-10 18:28
+--------------------------------------------------------------
+- load_data.py loads station and trip data and identifies
+stations by rowid
+- updated launch codes
+==============================================================
