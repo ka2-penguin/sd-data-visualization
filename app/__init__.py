@@ -9,6 +9,7 @@ def root():
 
 @app.route('/query.json', methods=['GET', 'POST'])
 def query():
+    #collect all data necessary to display map
     info = request.form["query"].split(",")
     data = {
         "trip_duration": info[0],
