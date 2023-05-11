@@ -1,22 +1,3 @@
-const sqlite3 = require("sqlite3").verbose();
-
-const db = new sqlite3.Database("../../data.db");
-function search() {
-  db.serialize(() => {
-      db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-          console.log(row.id + ": " + row.info);
-      });
-  });
-}
-
-window.addEventListener("beforeunload", function (e) {
-  db.close();
-  (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-  return confirmationMessage;                            //Webkit, Safari, Chrome
-});
-
-
-
 // Initialize and add the map
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
   ({
@@ -24,11 +5,6 @@ window.addEventListener("beforeunload", function (e) {
     // Add other bootstrap parameters as needed, using camel case.
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
-
-
-
-
-
 
 let map;
 async function initMap() {
