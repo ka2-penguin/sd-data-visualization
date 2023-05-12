@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@googlemaps/js-api-loader": "^1.15.1",
-    "google": "^2.1.0",
-    "sqlite3": "^5.1.6"
-  }
-}

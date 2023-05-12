@@ -15,10 +15,10 @@
 </head>
 <body>
     <h1>Map of Routes between Citibike Docks</h1>
-    <form>
+    <form action="/query.json" method="post">
       <label for="query">Query:</label><br>
       <input type="text" id="query" name="query"><br>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" id="submit">
     </form>
     <button id="button_map">click here for map</button>
     <div id="map"></div>
@@ -27,6 +27,6 @@
 </body>
 
 	<!-- JS linking -->
-	<script src="../static/js/index.js"></script>
+	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
 </html>
