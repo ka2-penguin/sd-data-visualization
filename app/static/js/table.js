@@ -6,7 +6,7 @@ var height = c.getBoundingClientRect().height;
 
 var resize = (e) =>{
 	ctx.canvas.width  = window.innerWidth - 100;
-	ctx.canvas.height = ctx.canvas.width / 3 * 2;
+	ctx.canvas.height = ctx.canvas.width / 2;
 	width = c.getBoundingClientRect().width;
 	height = c.getBoundingClientRect().height;
 }
@@ -23,8 +23,15 @@ var redraw = (e) => {
     ctx.fillRect(0,0, width, height);
 
     ctx.fillStyle = 'rgb(10,10,10)';
-    ctx.font = "100px Arial";
-    ctx.fillText("Text", 0, 0);
+    ctx.font = (width / 20) + "px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Text", ctx.canvas.width/2, 50 + width/20);
+
+    ctx.beginPath();
+	ctx.moveTo(20, 20);
+	ctx.lineTo(20, 200);
+	ctx.stroke();
+
 };
 
 redraw()
