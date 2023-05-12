@@ -80,3 +80,10 @@ mayaM -- 2023-05-10 18:28
 stations by rowid
 - updated launch codes
 ==============================================================
+
+mayaM -- 2023-05-11 17:58
+--------------------------------------------------------------
+- load_data.py replaced with load_stations.py and
+load_trips.py
+- some duplicate stations dealt with
+==============================================================
