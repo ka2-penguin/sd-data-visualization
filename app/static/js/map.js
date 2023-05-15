@@ -6,10 +6,9 @@
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
 
+
 let map;
-async function initMap() {
-  const obj = getJSON("/query.json");
-  console.log(obj.count)
+async function initMap(data) {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 };
