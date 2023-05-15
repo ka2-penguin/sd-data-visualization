@@ -48,8 +48,11 @@ def db_close():
 # rowid starts from 1 and increments ++
 def db_table_inits():
     c = db_connect()
-    c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, start_date string, \
-        start_time string, is_member bool, start_station_id int,\
+    # c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, start_date string, \
+    #     start_time string, is_member bool, start_station_id int,\
+    #     end_station_id int)")
+    c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, year int, month int,\
+    day int, hour int, minute int, is_member bool, start_station_id int,\
         end_station_id int)")
     db_close()
 
@@ -106,7 +109,6 @@ def get_stations(row):
     except:
         # raise
         return ()
-
     try:
         end_lat = round_coord(float(row[10]))
         end_long = round_coord(float(row[11]))
@@ -115,25 +117,13 @@ def get_stations(row):
     # return (start_lat, start_long, end_lat, end_long), start_name, end_name
     return (start_station_name,start_lat, start_long),(end_station_name,end_lat, end_long)
 
-def add_stations_from_dict(stations):
-    c = db_connect()
-    try:
-        index = 0
-        for station in stations.items():
-            lat,longitude = station[0]
-            name = station[1]
-            # if station[0] != '':
-            c.execute('INSERT INTO stations VALUES (?,?,?)',(name,lat,longitude))
-            index += 1
-    except:
-        db_close()
-        print(station)
-        raise
-    db_close()
-
 db_table_inits()
 # print(get_trip_duration('2022-09-10','00:00:00', '2022-09-10', '12:34:56'))
 
+
+'''trip_duration int, year int, month int,\
+    day int, hour int, minute int, is_member bool, start_station_id int,\
+        end_station_id int'''
 def faster_get_trip_data(row):
     start_timestamp = row[2].split(' ')
     start_date = start_timestamp[0]
@@ -148,8 +138,13 @@ def faster_get_trip_data(row):
     start_station_name = row[4]
     end_station_name = row[6]
     is_member = (row[12] == "member")
+
+    year,month,day = map(int,start_date.split('-'))
+    hour,minute,sec = map(int,start_time.split(':'))
+
+    new_row = (trip_duration, year,month,day, hour,minute, is_member)
     # new_row = (trip_duration, start_date, start_time, start_station_name, end_station_name, is_member)
-    new_row = (trip_duration, start_date, start_time, is_member)
+    # new_row = (trip_duration, start_date, start_time, is_member)
     # new_row = (trip_duration, start_date, start_time, start_station_lat, \
     # start_station_long, end_station_lat, end_station_long, is_member)
     # print(new_row)
@@ -170,7 +165,11 @@ def load_trips(coord_to_id):
         with open(filename_with_folder) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             info_row = next(csv_reader)
+            # index = 0
             for row in csv_reader:
+                # if index > 10:
+                #     break
+                # index += 1
                 scrap_trip = False  # if this trip should be ignored
                 # for station in get_stations(row):
                 coords = ()
@@ -207,15 +206,17 @@ def add_trips_with_coords(data, coord_to_id):
     # print(start_id)
     try:
         for trip in data:
+            # print(trip)
             if len(trip) < 8:
                 print(f'{trip = }')
             # start_id = get_station_id(trip[4], trip[5])
             # end_id = get_station_id(trip[6], trip[7])
-            start_id = coord_to_id[(trip[4], trip[5])]
-            end_id = coord_to_id[(trip[6], trip[7])]
+            start_id = coord_to_id[(trip[-4], trip[-3])]
+            end_id = coord_to_id[(trip[-2], trip[-1])]
             # print(f'{type(trip[:4]) = }')
-            # print(f'{type(start_id) = }')
-            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?)',(*trip[:4],start_id,end_id))
+            # print(f'{start_id = }')
+            # print(f'{end_id = }')
+            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?,?,?,?)',(*trip[:-4],start_id,end_id))
     except:
         db_close()
         raise
