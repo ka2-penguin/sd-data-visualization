@@ -6,26 +6,9 @@
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
 
-var getJSON = function(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.responseType = 'json';
-  xhr.onload = function() {
-    var status = xhr.status;
-    if (status === 200) {
-      callback(null, xhr.response);
-    } else {
-      callback(status, xhr.response);
-    }
-  };
-  xhr.send();
-};
-
 
 let map;
-async function initMap() {
-  const obj = getJSON("/query.json");
-  console.log(obj.count)
+async function initMap(data) {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 };

@@ -15,18 +15,52 @@
 </head>
 <body>
     <h1>Map of Routes between Citibike Docks</h1>
-    <form action="/query.json" method="post">
+    <form method="post" action="/query.json">
+    <!-- <form method="post"> -->
       <label for="query">Query:</label><br>
       <input type="text" id="query" name="query"><br>
       <input type="submit" value="Submit" id="submit">
     </form>
     <button id="button_map">click here for map</button>
+    <a href="/query.json">click here for query</a>
     <div id="map"></div>
 
     <canvas width="100%" height="500" id="playground"></canvas>
 </body>
 
 	<!-- JS linking -->
+  <script type="text/javascript">
+    window.onload = function() {
+      document.getElementById("submit").onclick = doWork;
+    } 
+
+    var cars = { 
+      "make":"Porsche",
+      "model":"911S" 
+    }
+
+    function doWork() {
+      console.log($("#query").serialize());
+      // ajax the JSON to the server
+      $.ajax({
+          type: 'POST',
+          url: '/query.json',
+          // data: JSON.stringify(cars),
+          data: $("#query").serialize(),
+          success: function(data) { 
+            alert('data: ' + data);
+          },
+          error: function() {
+            alert("something went wrong")
+          },
+          contentType: "application/json",
+          dataType: 'json'
+      });
+      // stop link reloading the page
+      event.preventDefault(); 
+    }
+  </script>
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>
