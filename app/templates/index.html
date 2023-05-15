@@ -15,10 +15,10 @@
 </head>
 <body>
     <h1>Map of Routes between Citibike Docks</h1>
-    <form id="query" method="post" action="/query.json">
+    <form method="post" action="/query.json">
     <!-- <form method="post"> -->
       <label for="query">Query:</label><br>
-      <input type="text" name="query"><br>
+      <input type="text" id="query" name="query"><br>
       <input type="submit" value="Submit" id="submit">
     </form>
     <button id="button_map">click here for map</button>
@@ -40,14 +40,18 @@
     }
 
     function doWork() {
+      console.log($("#query").serialize());
       // ajax the JSON to the server
       $.ajax({
           type: 'POST',
           url: '/query.json',
-          data: JSON.stringify(cars),
-          // data: $("#query").serialize(),
+          // data: JSON.stringify(cars),
+          data: $("#query").serialize(),
           success: function(data) { 
             alert('data: ' + data);
+          },
+          error: function() {
+            alert("something went wrong")
           },
           contentType: "application/json",
           dataType: 'json'
