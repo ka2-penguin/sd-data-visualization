@@ -30,7 +30,7 @@ async function initMap(data) {
     },
   });
 
-  makeMarker(map, 40.730610, -73.935242, 'yo');
+  makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
 } 
 
 //makes a marker on the map given map, coords, and a string for some info
