@@ -99,3 +99,8 @@ josephJ -- 2023-05-15 13:24
 - basic chart implemented using html/js canvas
 ==============================================================
 
+josephJ -- 2023-05-17 09:06
+--------------------------------------------------------------
+- added makeMarker function (it makes markers)
+- added more to histograms
+==============================================================
