@@ -21,7 +21,6 @@ def get_trips(filters) -> list[list[str]]:
     return results
 
 def create_sql_filter(filters: dict[str, str]) -> str:
-    # LIMIT {MAX_RESULTS}
     filter = f"SELECT * FROM trips"
     # will not work becuase the dict still has stuff inside, even if they are empty strings
     # possible solution is a try catch statement that defaults to getting the 100 most recent trips
@@ -41,10 +40,10 @@ def create_sql_filter(filters: dict[str, str]) -> str:
 
     if filters["min_time"]:
         time = filters["min_time"].split(":")
-        filter += f" AND hour >= {time[0]} AND min >= {time[1]}"
+        filter += f" AND hour >= {time[0]} AND minute >= {time[1]}"
     if filters["max_time"]:
         time = filters["max_time"].split(":")
-        filter += f" AND hour <= {time[0]} AND min <= {time[1]}"
+        filter += f" AND hour <= {time[0]} AND minute <= {time[1]}"
 
 
     if filters["is_member"]:
@@ -55,7 +54,8 @@ def create_sql_filter(filters: dict[str, str]) -> str:
     if filters["end_station_id"]:
         filter += " AND end_station_id = " + filters["end_station_id"]
     
-    filter += " ORDER BY year DESC"
+    if filters:
+        filter += " ORDER BY year DESC"
 
     # remove extra comma at the start of filter
     i = filter.find("WHERE") + len("WHERE")
@@ -84,6 +84,3 @@ def get_ridership_by_month():
 
 if __name__ == '__main__':
     get_ridership_by_month()
-
-
-"""SELECT * FROM TRIPS LIMIT 100 WHERE trip_duration >= 1 AND trip_duration <= 2 AND year >= 2023 AND month >= 05 AND day >= 10 AND year <= 2023 AND month <= 05 AND day <= 19 AND hour >= 03 AND min >= 04 AND hour <= 05 AND min <= 06 AND start_station_id = C AND end_station_id = test ORDER BY year DESC"""
