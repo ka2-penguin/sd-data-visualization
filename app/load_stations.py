@@ -3,17 +3,6 @@ import csv
 # from datetime import datetime
 
 FILENAMES = (
-    '202102-citibike-tripdata.csv',
-    '202103-citibike-tripdata.csv',
-    '202104-citibike-tripdata.csv',
-    '202105-citibike-tripdata.csv',
-    '202106-citibike-tripdata.csv',
-    '202107-citibike-tripdata.csv',
-    '202108-citibike-tripdata.csv',
-    '202109-citibike-tripdata.csv',
-    '202110-citibike-tripdata.csv',
-    '202111-citibike-tripdata.csv',
-    '202112-citibike-tripdata.csv',
     '202201-citibike-tripdata.csv',
     '202202-citibike-tripdata.csv',
     '202203-citibike-tripdata.csv',
@@ -26,10 +15,6 @@ FILENAMES = (
     '202210-citibike-tripdata.csv',
     '202211-citibike-tripdata.csv',
     '202212-citibike-tripdata.csv',
-    '202301-citibike-tripdata.csv',
-    '202302-citibike-tripdata.csv',
-    '202303-citibike-tripdata.csv',
-    '202304-citibike-tripdata.csv',
 )
 
 DB_FILE = "data.db"
