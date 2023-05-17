@@ -20,12 +20,20 @@ def get_trips(filters) -> list[list[str]]:
     db_close()
     return results
 
+def is_empty(dict):
+    for i in dict.values():
+        if i != "":
+            return False
+    return True
+
 def create_sql_filter(filters: dict[str, str]) -> str:
     # LIMIT {MAX_RESULTS}
     filter = f"SELECT * FROM trips"
     # will not work becuase the dict still has stuff inside, even if they are empty strings
     # possible solution is a try catch statement that defaults to getting the 100 most recent trips
-    if filters: 
+    is_empty = is_empty(filters)
+
+    if not is_empty: 
         filter += " WHERE"
     if filters["min_trip_duration"]:
         filter += f" AND trip_duration >= " + filters["min_trip_duration"]
@@ -41,10 +49,10 @@ def create_sql_filter(filters: dict[str, str]) -> str:
 
     if filters["min_time"]:
         time = filters["min_time"].split(":")
-        filter += f" AND hour >= {time[0]} AND min >= {time[1]}"
+        filter += f" AND hour >= {time[0]} AND minute >= {time[1]}"
     if filters["max_time"]:
         time = filters["max_time"].split(":")
-        filter += f" AND hour <= {time[0]} AND min <= {time[1]}"
+        filter += f" AND hour <= {time[0]} AND minute <= {time[1]}"
 
 
     if filters["is_member"]:
@@ -55,7 +63,8 @@ def create_sql_filter(filters: dict[str, str]) -> str:
     if filters["end_station_id"]:
         filter += " AND end_station_id = " + filters["end_station_id"]
     
-    filter += " ORDER BY year DESC"
+    if not is_empty:
+        filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"
 
     # remove extra comma at the start of filter
     i = filter.find("WHERE") + len("WHERE")
