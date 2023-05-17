@@ -20,7 +20,7 @@ window.addEventListener("resize", () => {
 	redraw("Chart", "Month", "CitiBikes Used")
 })
 
-const data = [["January", 30], ["February", 50], ["March", 120], ["April", 80],["January", 30], ["February", 50], ["March", 120], ["April", 80]]
+const data = [["January", 30], ["February", 50], ["March", 120], ["April", 80],["January", 30], ["February", 50], ["March", 120], ["April", 80], ["December", 99]]
 var max = 0;
 for (const i of data){
 	if (i[1] > max) max = i[1];
@@ -53,12 +53,21 @@ var redraw = (title, labelX, labelY, arr) => {
 	ctx.lineTo(5*width/48, 3 * height / 4);
 	ctx.lineTo(11 * width/12, 3 * height / 4);
 	ctx.stroke();
+	ctx.closePath();
 
 	//data
 	//x dimensions: 3width/24 to 21width/24
 	//y dimensions: height/4 to 3height/4
 	const boxWidth = (3*width/4) / data.length;
 	const maxBoxHeight = height / 2;
+
+	ctx.beginPath();
+	ctx.moveTo(5*width/48, 3*height/4 - maxBoxHeight);
+	ctx.lineTo(5*width/48 - width/96, 3*height/4 - maxBoxHeight);
+	ctx.stroke();
+	ctx.closePath();
+	ctx.font = (width / 60) + "px Arial";
+	ctx.fillText(max, 5*width/48 - 5*width/192, 73*height/96 - maxBoxHeight);
 
 	for (var i = 0; i < data.length; i++){
 		ctx.fillStyle = 'rgba(255,0,0,1)';
