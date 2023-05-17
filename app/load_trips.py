@@ -2,17 +2,6 @@ import sqlite3
 import csv
 
 FILENAMES = (
-    '202102-citibike-tripdata.csv',
-    '202103-citibike-tripdata.csv',
-    '202104-citibike-tripdata.csv',
-    '202105-citibike-tripdata.csv',
-    '202106-citibike-tripdata.csv',
-    '202107-citibike-tripdata.csv',
-    '202108-citibike-tripdata.csv',
-    '202109-citibike-tripdata.csv',
-    '202110-citibike-tripdata.csv',
-    '202111-citibike-tripdata.csv',
-    '202112-citibike-tripdata.csv',
     '202201-citibike-tripdata.csv',
     '202202-citibike-tripdata.csv',
     '202203-citibike-tripdata.csv',
@@ -25,13 +14,10 @@ FILENAMES = (
     '202210-citibike-tripdata.csv',
     '202211-citibike-tripdata.csv',
     '202212-citibike-tripdata.csv',
-    '202301-citibike-tripdata.csv',
-    '202302-citibike-tripdata.csv',
-    '202303-citibike-tripdata.csv',
-    '202304-citibike-tripdata.csv',
 )
 
 DB_FILE = "data.db"
+# DB_FILE = "test.db"
 
 db = None
 
@@ -152,12 +138,7 @@ def faster_get_trip_data(row):
 
 
 def load_trips(coord_to_id):
-    # stations = set()
-    # stations = dict()
-    # station_names = set()
-    # stations_coords = set()     #rounded to the 1000th to avoid duplicates
-
-    # trimmed_data = []
+    num_of_trips = {}
     for filename in FILENAMES:
     # for filename in ['202201-citibike-tripdata.csv',]:
         trimmed_data = set()
@@ -167,9 +148,6 @@ def load_trips(coord_to_id):
             info_row = next(csv_reader)
             # index = 0
             for row in csv_reader:
-                # if index > 10:
-                #     break
-                # index += 1
                 scrap_trip = False  # if this trip should be ignored
                 # for station in get_stations(row):
                 coords = ()
@@ -195,7 +173,13 @@ def load_trips(coord_to_id):
             print(f'got data for {filename[:6]}')
             # print(f'{len(stations) = }')
             print(f'{len(trimmed_data) = }')
+
+            num_of_trips[filename[:6]] = len(trimmed_data)
+            print(f'{num_of_trips = }')
+
         add_trips_with_coords(trimmed_data, coord_to_id)
+
+
         # add_new_trip(trimmed_data)
     # print(trimmed_data)
     # print(stations)
