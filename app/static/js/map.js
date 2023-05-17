@@ -29,7 +29,30 @@ async function initMap(data) {
       },
     },
   });
+
+  makeMarker(map, 40.730610, -73.935242, 'yo');
 } 
+
+//makes a marker on the map given map, coords, and a string for some info
+var makeMarker = (map, lat1, lng1, info) => {
+  const infowindow = new google.maps.InfoWindow({
+    content: '<p>' + info + '</p>',
+    ariaLabel: "Times New Roman",
+  });
+
+  const marker = new google.maps.Marker({
+    position: { lat: lat1, lng: lng1 },
+    map,
+    title: "Hello World!",
+  });
+
+  marker.addListener("click", () => {
+    infowindow.open({
+      anchor: marker,
+      map,
+    });
+  });
+}
 
 // let button_map = document.getElementById("button_map");
 // button_map.addEventListener("click", initMap);
