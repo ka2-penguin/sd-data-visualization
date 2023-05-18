@@ -18,6 +18,7 @@ FILENAMES = (
 
 DB_FILE = "data.db"
 # DB_FILE = "test.db"
+# DB_FILE = "less_round.db"
 
 db = None
 
@@ -188,6 +189,62 @@ def load_trips(coord_to_id):
     # print(trimmed_data)
     # print(stations)
 
+def load_trips_no_coords():
+    for filename in FILENAMES:
+    # for filename in ['202201-citibike-tripdata.csv',]:
+        trimmed_data = set()
+        filename_with_folder = 'data/' + filename
+        with open(filename_with_folder) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            info_row = next(csv_reader)
+            for row in csv_reader:
+                scrap_trip = False  # if this trip should be ignored
+                coords = ()
+                # trip_stations = get_stations(row)
+                station_ids = (row[5],row[7])
+
+                if row[5] == '' or row[7] == '':
+                    continue
+
+                new_row = faster_get_trip_data(row)
+
+                # if new_row[4] != '' and new_row[0] < 60*60*5 and new_row[0] != -1:            # if end station exists
+                if not scrap_trip and new_row[0] < 60*60*5 and new_row[0] != -1:
+                    trimmed_data.add(new_row+station_ids)
+                # break
+
+            print(f'got data for {filename[:6]}')
+            # print(f'{len(stations) = }')
+            print(f'{len(trimmed_data) = }')
+
+            # num_of_trips[filename[:6]] = len(trimmed_data)
+            # print(f'{num_of_trips = }')
+
+        # add_trips_with_coords(trimmed_data, coord_to_id)
+        add_trips_with_ids(trimmed_data)
+
+def add_trips_with_ids(data):
+    id_to_custom_id = get_id_to_custom_id()
+    c = db_connect()
+    # print(start_id)
+    try:
+        for trip in data:
+            # print(trip)
+            if len(trip) < 8:
+                print(f'{trip = }')
+            # start_id = get_station_id(trip[4], trip[5])
+            # end_id = get_station_id(trip[6], trip[7])
+            start_id = id_to_custom_id[trip[-2]]
+            end_id = id_to_custom_id[trip[-1]]
+            # print(f'{type(trip[:4]) = }')
+            # print(f'{start_id = }')
+            # print(f'{end_id = }')
+            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?,?,?)',(*trip[:6],start_id,end_id))
+    except:
+        db_close()
+        raise
+    db_close()
+
 #{(266, '2022-01-18', '08:23:52', True, 40.688, -73.991, 40.692, -73.993)}
 def add_trips_with_coords(data, coord_to_id):
     c = db_connect()
@@ -228,9 +285,31 @@ def get_coord_to_id():
         index += 1
     return coord_to_id
 
+def get_id_to_custom_id():
+    c = db_connect()
+    # print(start_id)
+    try:
+        station_ids = tuple(c.execute('SELECT station_id FROM stations order by rowid ASC'))
+    except:
+        db_close()
+        raise
+    db_close()
+
+    # coord_to_id = dict()
+    id_to_custom = dict()
+    index = 1
+    for id_tuple in station_ids:
+        # print(index, coord)
+        # print(type(id))
+        # print(id)
+        id = id_tuple[0]
+        id_to_custom[id] = index
+        index += 1
+    return id_to_custom
+
 if __name__ == '__main__':
-    coord_to_id = get_coord_to_id()
-    load_trips(coord_to_id)
+    # coord_to_id = get_coord_to_id()
+    load_trips_no_coords()
     # get_coord_to_id()
             
 

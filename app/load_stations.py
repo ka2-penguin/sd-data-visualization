@@ -17,7 +17,7 @@ FILENAMES = (
     '202212-citibike-tripdata.csv',
 )
 
-DB_FILE = "less_round.db"
+DB_FILE = "data.db"
 
 db = None
 
@@ -122,22 +122,6 @@ def get_stations(row):
 
     # return (start_lat, start_long, end_lat, end_long), start_name, end_name
     return (start_station_name,start_lat, start_long),(end_station_name,end_lat, end_long)
-
-# def add_stations_from_dict(stations):
-#     c = db_connect()
-#     try:
-#         index = 0
-#         for station in stations.items():
-#             lat,longitude = station[0]
-#             name = station[1]
-#             # if station[0] != '':
-#             c.execute('INSERT INTO stations VALUES (?,?,?,?)',(name,lat,longitude))
-#             index += 1
-#     except:
-#         db_close()
-#         print(station)
-#         raise
-#     db_close()
 
 def add_stations_from_list(stations):
     c = db_connect()
