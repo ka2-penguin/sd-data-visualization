@@ -1,8 +1,8 @@
 import sqlite3
 import json
 
-DB_FILE = "data.db"
-
+# DB_FILE = "data.db"
+DB_FILE = "less_round.db"
 db = None
 
 def db_connect():
@@ -41,7 +41,30 @@ def load_json():
     with open('monthly_data.json','w') as f:
         json.dump(data,f)
 
+def get_stations_data():
+    # data = dict()
+    c = db_connect()
+    # last_max_id = 0
+    try:
+        raw_data = tuple(c.execute('SELECT rowid,station_name,latitude,longitude FROM stations'))
+    except:
+        db_close()
+        raise
+    db_close()
+    # print(json.dumps(data))
+
+    print(f'{len(raw_data) = }')
+
+    with open('static/data/stations.json','w') as f:
+        # f.write('stations = \'')
+        json.dump(raw_data,f)
+        # f.write('\';')
+
+    # return data
+
+
 
 if __name__ == '__main__':
     # print(get_month_histogram_data())
-    load_json()
+    # load_json()
+    get_stations_data()
