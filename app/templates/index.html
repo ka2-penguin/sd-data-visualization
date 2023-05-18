@@ -15,7 +15,6 @@
 </head>
     <h1>Map of Routes between Citibike Docks</h1>
     <form method="post" id="filters">
-    <!-- <form method="post"> -->
       <label for="min_trip_duration">min_trip_duration:</label><br>
       <input type="text" id="min_trip_duration" name="min_trip_duration"><br>
 
@@ -36,8 +35,11 @@
       <input type="time" id="max_time" name="max_time"><br>
 
       <label for="is_member">is_member:</label><br>
-      <input type="checkbox" id="is_member" name="is_member"><br>
-
+      <select id="is_member" name="is_member"><br>
+        <option value=""></option>
+        <option value="True">True</option>
+        <option value="False">False</option>
+      </select>
 
       <label for="start_station_id">start_station_id:</label><br>
       <input type="text" id="start_station_id" name="start_station_id"><br>
@@ -45,19 +47,18 @@
       <label for="end_station_id">end_station_id:</label><br>
       <input type="text" id="end_station_id" name="end_station_id"><br>
 
+      <input type="reset" value="Reset" id="reset">
       <input type="submit" value="Submit" id="submit">
+
     </form>
 
     <form method="post" id="query">
-      <input list="results">
-      <datalist id="results">
+      <select id="results">
         {% for i in range(0, results|length) %}
-          <option value={{results[i]}} label={{i}}></option>
+          <option value={{results[i]}}>{{i}}</option>
         {% endfor %}
-        <option value=""></option>
-
-      </datalist>
-
+        <!-- <option value=""></option> -->
+      </select>
     </form>
 
     <button id="button_map">click here for map</button>
@@ -71,11 +72,6 @@
     window.onload = function() {
       document.getElementById("submit").onclick = doWork;
     } 
-
-    // var cars = { 
-    //   "make":"Porsche",
-    //   "model":"911S" 
-    // }
 
     function doWork() {
 		console.log($("#filters").serialize());
@@ -112,4 +108,5 @@
   	</script>
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>

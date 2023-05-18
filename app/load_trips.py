@@ -37,7 +37,10 @@ def db_table_inits():
     # c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, start_date string, \
     #     start_time string, is_member bool, start_station_id int,\
     #     end_station_id int)")
-    c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, year int, month int,\
+    # c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, year int, month int,\
+    # day int, hour int, minute int, is_member bool, start_station_id int,\
+    #     end_station_id int)")
+    c.execute("CREATE TABLE IF NOT EXISTS trips (trip_duration int, month int,\
     day int, hour int, minute int, is_member bool, start_station_id int,\
         end_station_id int)")
     db_close()
@@ -107,7 +110,7 @@ db_table_inits()
 # print(get_trip_duration('2022-09-10','00:00:00', '2022-09-10', '12:34:56'))
 
 
-'''trip_duration int, year int, month int,\
+'''trip_duration int, month int,\
     day int, hour int, minute int, is_member bool, start_station_id int,\
         end_station_id int'''
 def faster_get_trip_data(row):
@@ -121,14 +124,15 @@ def faster_get_trip_data(row):
     
     trip_duration = get_trip_duration(start_date, start_time, end_date, end_time)
 
-    start_station_name = row[4]
-    end_station_name = row[6]
+    # start_station_name = row[4]
+    # end_station_name = row[6]
     is_member = (row[12] == "member")
 
     year,month,day = map(int,start_date.split('-'))
     hour,minute,sec = map(int,start_time.split(':'))
 
-    new_row = (trip_duration, year,month,day, hour,minute, is_member)
+    new_row = (trip_duration, month,day, hour,minute, is_member)
+    # new_row = (trip_duration, year,month,day, hour,minute, is_member)
     # new_row = (trip_duration, start_date, start_time, start_station_name, end_station_name, is_member)
     # new_row = (trip_duration, start_date, start_time, is_member)
     # new_row = (trip_duration, start_date, start_time, start_station_lat, \
@@ -174,8 +178,8 @@ def load_trips(coord_to_id):
             # print(f'{len(stations) = }')
             print(f'{len(trimmed_data) = }')
 
-            num_of_trips[filename[:6]] = len(trimmed_data)
-            print(f'{num_of_trips = }')
+            # num_of_trips[filename[:6]] = len(trimmed_data)
+            # print(f'{num_of_trips = }')
 
         add_trips_with_coords(trimmed_data, coord_to_id)
 
@@ -200,7 +204,7 @@ def add_trips_with_coords(data, coord_to_id):
             # print(f'{type(trip[:4]) = }')
             # print(f'{start_id = }')
             # print(f'{end_id = }')
-            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?,?,?,?)',(*trip[:-4],start_id,end_id))
+            rowid = c.execute('INSERT INTO trips VALUES (?,?,?,?,?,?,?,?)',(*trip[:-4],start_id,end_id))
     except:
         db_close()
         raise
