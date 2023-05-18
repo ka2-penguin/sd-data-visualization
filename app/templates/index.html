@@ -67,8 +67,6 @@
 </body>
 
 	<!-- JS linking -->
-<<<<<<< HEAD
-=======
   <script type="text/javascript">
     window.onload = function() {
       document.getElementById("submit").onclick = doWork;
@@ -80,39 +78,38 @@
     // }
 
     function doWork() {
-      console.log($("#filters").serialize());
-      // ajax the JSON to the server
-      var filters = {
-        "min_trip_duration": document.getElementById("min_trip_duration").value,
-        "max_trip_duration": document.getElementById("max_trip_duration").value,
-        "min_date": document.getElementById("min_date").value,
-        "max_date": document.getElementById("max_date").value,
-        "min_time": document.getElementById("min_time").value,
-        "max_time": document.getElementById("max_time").value,
-        "is_member": document.getElementById("is_member").checked,
-        "start_station_id": document.getElementById("start_station_id").value,
-        "end_station_id": document.getElementById("end_station_id").value,
-      }
+		console.log($("#filters").serialize());
+		// ajax the JSON to the server
+		var filters = {
+	        "min_trip_duration": document.getElementById("min_trip_duration").value,
+	        "max_trip_duration": document.getElementById("max_trip_duration").value,
+	        "min_date": document.getElementById("min_date").value,
+	        "max_date": document.getElementById("max_date").value,
+	        "min_time": document.getElementById("min_time").value,
+	        "max_time": document.getElementById("max_time").value,
+	        "is_member": document.getElementById("is_member").checked,
+	        "start_station_id": document.getElementById("start_station_id").value,
+	        "end_station_id": document.getElementById("end_station_id").value,
+      	}
 
-      $.ajax({
-          type: 'POST',
-          url: '/',
-          // data: JSON.stringify(cars),
-          data: JSON.stringify(filters),
-          success: function(data) { 
-            alert('data: ' + data);
-          },
-          error: function() {
-            alert("something went wrong")
-          },
-          contentType: "application/json",
-          dataType: 'json'
-      });
-      // stop link reloading the page
-      event.preventDefault(); 
+	    $.ajax({
+			type: 'POST',
+			url: '/',
+			// data: JSON.stringify(cars),
+			data: JSON.stringify(filters),
+			success: function(data) { 
+			alert('data: ' + data);
+			},
+			error: function() {
+			alert("something went wrong")
+			},
+			contentType: "application/json",
+			dataType: 'json'
+		});
+		// stop link reloading the page
+		event.preventDefault(); 
     }
-  </script>
->>>>>>> 5cc3f30bd24156d0c24b6c86882fd18c8a10f176
+  	</script>
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
 </html>
