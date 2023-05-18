@@ -55,7 +55,7 @@
     <form method="post" id="query">
       <select id="results">
         {% for i in range(0, results|length) %}
-          <option value={{results[i]}} label={{i}}></option>
+          <option value={{results[i]}}>{{i}}</option>
         {% endfor %}
         <!-- <option value=""></option> -->
       </select>
