@@ -1,8 +1,8 @@
 import sqlite3
 import json
 
-# DB_FILE = "data.db"
-DB_FILE = "less_round.db"
+DB_FILE = "data.db"
+# DB_FILE = "less_round.db"
 db = None
 
 def db_connect():

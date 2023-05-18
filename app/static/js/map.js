@@ -44,12 +44,13 @@ async function showStations(){
     // console.log(station);
     const lat = station[2];
     const lng = station[3];
-    // const name = station[1];
+    const name = station[1];
     const id = station[0];
+    const info = name + '<br>id: '+id
     // console.log(lat);
-    makeMarker(map, lat, lng, id);
+    makeMarker(map, lat, lng, info);
   }
-  console.log(index);
+  // console.log(index);
 }
 
 //makes a marker on the map given map, coords, and a string for some info
@@ -63,6 +64,7 @@ var makeMarker = (map, lat1, lng1, info) => {
     position: { lat: lat1, lng: lng1 },
     map,
     title: "Hello World!",
+    icon: "../static/blue-icon.png",
   });
 
   marker.addListener("click", () => {

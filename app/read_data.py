@@ -57,7 +57,8 @@ def create_sql_filter(filters: dict[str, str]) -> str:
         filter += " AND end_station_id = " + filters["end_station_id"]
     
     if not are_filters_empty(filters):
-        filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"
+        # filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"
+        filter += f" ORDER BY month, day, hour, minute LIMIT {MAX_RESULTS}"
         
         # remove extra comma at the start of filter
         i = filter.find("WHERE") + len("WHERE")
