@@ -19,8 +19,45 @@ window.addEventListener("resize", () => {
 	resize();
 	redraw("Chart", "Month", "CitiBikes Used")
 })
+const months = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+]
 
-const data = [["January", 30,10], ["February", 50,42], ["March", 120,63], ["April", 80,10],["January", 30,10]]
+var data = new Array();
+
+async function getData(){
+	const response = await fetch('../static/data/monthly_data.json');
+	const monthly_data = await response.json();
+	// console.log(monthly_data)
+	var new_data = [];
+	for (index in monthly_data) {
+		const month = months[index];
+		const month_data = monthly_data[index];
+		const new_data_point = [month, month_data[0], month_data[1]];
+		new_data.push(new_data_point);
+	}
+	// console.log(new_data);
+	data = new_data;
+	console.log(data);
+	// redraw("Chart", "Month", "CitiBikes Used", data)
+	// return new_data;
+}
+getData()
+// const data = getData();
+console.log(data);
+
+// const data = [["January", 30,10], ["February", 50,42], ["March", 120,63], ["April", 80,10],["January", 30,10]]
 var max = 0;
 for (const i of data){
 	if (i[1] > max) max = i[1];
