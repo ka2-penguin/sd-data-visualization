@@ -93,7 +93,6 @@ mayaM -- 2023-05-12 09:30
 - trips table uses int for date and time instead of string
 ==============================================================
 
-
 josephJ -- 2023-05-15 13:24
 --------------------------------------------------------------
 - basic chart implemented using html/js canvas
@@ -103,6 +102,18 @@ josephJ -- 2023-05-17 09:06
 --------------------------------------------------------------
 - added makeMarker function (it makes markers)
 - added more to histograms
+==============================================================
+
+mayaM -- 2023-05-17 10:54
+--------------------------------------------------------------
+- reorganized database without year column
+==============================================================
+
+mayaM -- 2023-05-18 16:22
+--------------------------------------------------------------
+- fewer stations in database
+- map displays docks
+- created custom icon representing docks
 ==============================================================
 
 josephJ -- 2023-05-19 08:47

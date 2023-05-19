@@ -13,8 +13,7 @@ There is another page with boarder data visualizations about the number of trips
 1. Get the requirements
 
 ### How to get the data and load it on the database
-Note: `data.db` will be over 2 GB and the `.zip` and `.csv`
-files will be around 14 GB. After running `load_stations.py`
+After running `load_stations.py`
 and `load_trips.py` the app doesn't need the `.zip` or `.csv`
  files so feel free to delete them.
 
@@ -36,6 +35,6 @@ SQLite3: loading data - Maya
 SQLite3: reading data - Daniel/Maya
 FEF (Bootstrap) - Daniel  
 CSS - Daniel  
-HTML - Daniel  
+<!-- HTML - Daniel   -->
 Map - Daniel/Joseph   
 JS - Joseph/Daniel

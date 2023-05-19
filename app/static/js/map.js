@@ -31,7 +31,27 @@ async function initMap(data) {
   });
 
   makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
+  showStations();
 } 
+
+async function showStations(){
+  const response = await fetch('../static/data/stations.json');
+  const stations_data = await response.json();
+  console.log(stations_data);
+  // const stations_data = JSON.parse(stations);
+  for (index in stations_data) {
+    const station = stations_data[index];
+    // console.log(station);
+    const lat = station[2];
+    const lng = station[3];
+    const name = station[1];
+    const id = station[0];
+    const info = name + '<br>id: '+id
+    // console.log(lat);
+    makeMarker(map, lat, lng, info);
+  }
+  // console.log(index);
+}
 
 //makes a marker on the map given map, coords, and a string for some info
 var makeMarker = (map, lat1, lng1, info) => {
@@ -39,11 +59,12 @@ var makeMarker = (map, lat1, lng1, info) => {
     content: '<p>' + info + '</p>',
     ariaLabel: "Times New Roman",
   });
-
+  // console.log(lat1);
   const marker = new google.maps.Marker({
     position: { lat: lat1, lng: lng1 },
     map,
     title: "Hello World!",
+    icon: "../static/blue-icon.png",
   });
 
   marker.addListener("click", () => {
@@ -58,3 +79,4 @@ var makeMarker = (map, lat1, lng1, info) => {
 // button_map.addEventListener("click", initMap);
 let button = document.getElementById("submit");
 button_map.addEventListener("click", initMap);
+// button_map.addEventListener("click", showStations);
