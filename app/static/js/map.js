@@ -30,7 +30,7 @@ async function initMap(data) {
     },
   });
 
-  makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
+  // makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
   showStations();
 } 
 
@@ -48,13 +48,13 @@ async function showStations(){
     const id = station[0];
     const info = name + '<br>id: '+id
     // console.log(lat);
-    makeMarker(map, lat, lng, info);
+    makeMarker(map, lat, lng, info, id);
   }
   // console.log(index);
 }
 
 //makes a marker on the map given map, coords, and a string for some info
-var makeMarker = (map, lat1, lng1, info) => {
+var makeMarker = (map, lat1, lng1, info, id) => {
   const infowindow = new google.maps.InfoWindow({
     content: '<p>' + info + '</p>',
     ariaLabel: "Times New Roman",
@@ -63,7 +63,8 @@ var makeMarker = (map, lat1, lng1, info) => {
   const marker = new google.maps.Marker({
     position: { lat: lat1, lng: lng1 },
     map,
-    title: "Hello World!",
+    // title: "Hello World!",
+    title: ""+id,
     icon: "../static/blue-icon.png",
   });
 
