@@ -10,7 +10,7 @@ body, html{
 h1 {
 	font-size:70px;
 	text-align:center;
-	padding:20px;
+	padding-bottom:20px;
 }
 
 #map {

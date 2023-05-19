@@ -104,3 +104,17 @@ josephJ -- 2023-05-17 09:06
 - added makeMarker function (it makes markers)
 - added more to histograms
 ==============================================================
+
+josephJ -- 2023-05-19 08:47
+--------------------------------------------------------------
+- notes for gallery walk
+- taxist dealt with long load time by accepting their fate
+- they also had cool cluster data visualization and a cool 
+animated path of travel
+- the Taylor swift group had a lot of dlc content like
+Buzzfeed quizzes
+- yammers had a pretty cool idea of using many databases and
+Displaying different data based on what trivia question was
+Asked
+- someone had live feed of airplane trips 
+==============================================================
