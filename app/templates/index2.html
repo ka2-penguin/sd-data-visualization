@@ -14,46 +14,9 @@
 
 </head>
     <h1>Map of Routes between Citibike Docks</h1>
-    <form method="post" id="filters">
-      <label for="min_trip_duration">Minimum trip duration (in seconds):</label><br>
-      <input type="text" id="min_trip_duration" name="min_trip_duration"><br>
 
-      <label for="max_trip_duration">Maximum trip duration (in seconds):</label><br>
-      <input type="text" id="max_trip_duration" name="max_trip_duration"><br>
-
-
-      <label for="min_date">Date range:</label><br>
-      <input type="date" id="min_date" name="min_date">
-
-      <!-- <label for="max_date">Lastest date:</label><br> -->
-      <input type="date" id="max_date" name="max_date"><br>
-
-      <label for="min_time">Start time range:</label>
-      <input type="time" id="min_time" name="min_time">
-      <!-- <label for="max_time">Lastest start time:</label> -->
-      <input type="time" id="max_time" name="max_time"><br>
-
-      <label for="is_member">Types of users:</label>
-      <select id="is_member" name="is_member"><br>
-        <option value="">All</option>
-        <option value="True">Members only</option>
-        <option value="False">Non-members only</option>
-      </select>
-      <br>
-
-      <label for="start_station_id">Start Station ID:</label>
-      <input type="text" id="start_station_id" name="start_station_id"><br>
-
-      <label for="end_station_id">End Station ID:</label>
-      <input type="text" id="end_station_id" name="end_station_id"><br>
-
-      <input type="reset" value="Reset" id="reset">
-      <input type="submit" value="Submit" id="submit">
-
-    </form>
-
-    <p>{{results}}</p>
-    <p>{{text}}</p>
+    <!-- <p>{{results}}</p> -->
+    <!-- <p>{{text}}</p> -->
 
     <form method="post" id="query">
       <select id="results">
@@ -71,7 +34,7 @@
     <canvas width="100%" height="500" id="playground"></canvas>
 </body>
 
-	<!-- JS linking -->
+	<!-- JS linking
   <script type="text/javascript">
     window.onload = function() {
       document.getElementById("submit").onclick = doWork;
@@ -100,19 +63,17 @@
 			data: JSON.stringify(filters),
 			success: function(data) { 
 			alert('data: ' + data);
-
 			},
-			error: function() {
+			// error: function() {
 			// alert("something went wrong")
-      window.location.href = "/trip-search-results";
-			},
+			// },
 			contentType: "application/json",
 			dataType: 'json'
 		});
 		// stop link reloading the page
 		event.preventDefault(); 
     }
-  	</script>
+  	</script> -->
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
