@@ -21,17 +21,26 @@ def get_trips(filters) -> list[list[str]]:
     db_close()
     return results
 
-def get_lat_lng(station_id: int) -> tuple[float, float]:
+def get_coord_from_id(station_id):
     c = db_connect()
-    result = list(c.execute(f"SELECT * FROM stations WHERE station_id = {station_id}", ()))
+    # filter = create_sql_filter(filters)
+    coord = tuple(c.execute('SELECT latitude,longitude FROM stations WHERE rowid=?', (station_id,)))[0]
     db_close()
-    
-    lat = float(result[3])
-    print(lat)
-    lng = float(result[4])
-    print(lng)
+    # print(coord)
+    return coord
 
-    return (lat, lng)
+def get_csv_coords(id1,id2):
+    coord1 = get_coord_from_id(id1)
+    coord2 = get_coord_from_id(id2)
+
+    return f'{coord1[0]},{coord1[1]},{coord2[0]},{coord2[1]}'
+
+def get_csv_coords_list(data):
+    csv_list = []
+    for row in data:
+        csv_row = get_csv_coords(row[-2],row[-1])
+        csv_list.append(csv_row)
+    return csv_list
 
 def create_sql_filter(filters: dict[str, str]) -> str:
     filter = f"SELECT * FROM trips"

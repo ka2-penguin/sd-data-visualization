@@ -30,7 +30,11 @@ def got_form():
     print("in got_form")
     print(f'{search_results[0] = }')
     print(f'{sample_text = }')
-    return render_template("index2.html", results=search_results,text=sample_text)
+    display_search_results = prettier_results(search_results)
+    csv_coords_list = read_data.get_csv_coords_list(search_results)
+    return render_template("results.html", results=display_search_results,option_values=csv_coords_list)
+
+    # return render_template("index2.html", results=search_results,text=sample_text)
 
 @app.route("/query.json", methods=["GET", "POST"])
 def query(): 
@@ -48,6 +52,18 @@ def query():
         print("read data:")
         print(data)
         return jsonify(data)
+    
+def prettier_results(data):
+    new_data = []
+    for row in data:
+        date = f'{row[1]}-{row[2]}'
+        time = f'{row[3]}:{row[4]}'
+        if row[5] == 1:
+            user_type = 'member'
+        else:
+            user_type = 'casual'
+        new_data.append(f'{row[0]} {date} {time} {user_type} {row[6]} {row[7]}')
+    return new_data
 
 if __name__ == "__main__":
     app.debug = True
