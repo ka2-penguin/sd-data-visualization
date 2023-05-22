@@ -80,8 +80,9 @@ async function showStations(){
 
 //makes a marker on the map given map, coords, and a string for some info
 var makeMarker = (map, lat1, lng1, info, id) => {
+  const arr = info.split('id: ');
   const infowindow = new google.maps.InfoWindow({
-    content: '<p>' + info + '</p>',
+    content: '<div id="marker"><h6>' + arr[0] + '</h6><p>Station ID: ' + arr[1] + '</p></div>',
     ariaLabel: "Times New Roman",
   });
   // console.log(lat1);
@@ -95,8 +96,15 @@ var makeMarker = (map, lat1, lng1, info, id) => {
 
   // allStationMarkers.push(marker);
 
-  marker.addListener("click", () => {
+  marker.addListener("mousemove", () => {
     infowindow.open({
+      anchor: marker,
+      map,
+    });
+  });
+
+  marker.addListener("mouseout", () => {
+    infowindow.close({
       anchor: marker,
       map,
     });
