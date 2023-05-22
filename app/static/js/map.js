@@ -78,5 +78,7 @@ var makeMarker = (map, lat1, lng1, info) => {
 // let button_map = document.getElementById("button_map");
 // button_map.addEventListener("click", initMap);
 let button = document.getElementById("submit");
+
 button_map.addEventListener("click", initMap);
+initMap()
 // button_map.addEventListener("click", showStations);
