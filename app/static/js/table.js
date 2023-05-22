@@ -1,5 +1,7 @@
 var c = document.getElementById("playground");
 var ctx = c.getContext("2d");
+var bike_data;
+var max_height;
 
 var width = c.getBoundingClientRect().width;
 var height = c.getBoundingClientRect().height;
@@ -17,16 +19,57 @@ resize()
 
 window.addEventListener("resize", () => {
 	resize();
-	redraw("Chart", "Month", "CitiBikes Used")
+	redraw("Citibike Trips per Month", "Month", "Trips",bike_data,max_height)
 })
+const months = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+]
 
-const data = [["January", 30,10], ["February", 50,42], ["March", 120,63], ["April", 80,10],["January", 30,10]]
-var max = 0;
-for (const i of data){
-	if (i[1] > max) max = i[1];
+// var data = new Array();
+
+async function getData(){
+	const response = await fetch('../static/data/monthly_data.json');
+	const monthly_data = await response.json();
+	// console.log(monthly_data)
+	var new_data = [];
+	for (index in monthly_data) {
+		const month = months[index];
+		const month_data = monthly_data[index];
+		const new_data_point = [month, month_data[0], month_data[1]];
+		new_data.push(new_data_point);
+	}
+
+	var max = 0;
+	for (const i of new_data){
+		if (i[1] > max) max = i[1];
+	}
+	redraw("Citibike Trips per Month", "Month", "Trips", new_data, max)
 }
+getData();
+// getData(data);
+// const data = getData();
+// console.log(data);
 
-var redraw = (title, labelX, labelY, arr) => {
+// // const data = [["January", 30,10], ["February", 50,42], ["March", 120,63], ["April", 80,10],["January", 30,10]]
+// var max = 0;
+// for (const i of data){
+// 	if (i[1] > max) max = i[1];
+// }
+
+var redraw = (title, labelX, labelY, data, max) => {
+	bike_data = data;
+	max_height = max;
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = 'rgba(255,255,255,1)';
     ctx.fillRect(0,0, width, height);
@@ -67,7 +110,7 @@ var redraw = (title, labelX, labelY, arr) => {
 	ctx.stroke();
 	ctx.closePath();
 	ctx.font = (width / 60) + "px Arial";
-	ctx.fillText(max, 5*width/48 - 5*width/192, 73*height/96 - maxBoxHeight);
+	ctx.fillText(max, 5*width/48 - 5*width/110, 73*height/96 - maxBoxHeight);
 
 	for (var i = 0; i < data.length; i++){
 		ctx.fillStyle = 'rgba(255,0,0,1)';
@@ -75,9 +118,9 @@ var redraw = (title, labelX, labelY, arr) => {
 		ctx.fillStyle = 'rgba(0,0,255,0.4)';
 		ctx.fillRect(boxWidth * i + width/8,3 * height / 4 - ((data[i][2] / max) * maxBoxHeight), boxWidth, (data[i][2] / max) * maxBoxHeight);
 		ctx.fillStyle = 'rgb(10,10,10)';
-		ctx.font = (width / 60) + "px Arial";
+		ctx.font = (width / 80) + "px Arial";
 		ctx.fillText(data[i][0], boxWidth * (i + 0.5) + width/8,19 * height / 24);
 	}
 };
 
-redraw("Chart", "Month", "CitiBikes Used", data)
+// redraw("Chart", "Month", "CitiBikes Used", data)

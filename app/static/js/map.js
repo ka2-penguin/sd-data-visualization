@@ -6,6 +6,7 @@
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
 
+// var allStationMarkers;
 
 let map;
 async function initMap(data) {
@@ -30,15 +31,36 @@ async function initMap(data) {
     },
   });
 
-  makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
-  showStations();
+  // makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
+  // var allStationMarkers;
+  const stationMarkers = await showStations().then();
+  console.log(stationMarkers);
+  let button = document.getElementById("clear_markers");
+  button.addEventListener("click", function() {clearMarkers(stationMarkers);});
 } 
+
+var clearMarkers = (markers) => {
+  var marker;
+  // console.log(markers);
+  for (index in markers){
+    marker = markers[index];
+    // console.log(marker);
+    marker.setMap(null);
+  }
+}
 
 async function showStations(){
   const response = await fetch('../static/data/stations.json');
   const stations_data = await response.json();
-  console.log(stations_data);
+// function showStations(){
+  var allStationMarkers = new Array();
+//   const response = require('../static/data/stations.json');
+  // console.log(response)
+  // const stations_data = JSON.parse(response);//response.json();
+  // console.log(stations_data);
   // const stations_data = JSON.parse(stations);
+  // let marker;
+  let marker_promise;
   for (index in stations_data) {
     const station = stations_data[index];
     // console.log(station);
@@ -48,13 +70,16 @@ async function showStations(){
     const id = station[0];
     const info = name + '<br>id: '+id
     // console.log(lat);
-    makeMarker(map, lat, lng, info);
+    marker_promise = makeMarker(map, lat, lng, info, id);
+    allStationMarkers.push(marker_promise);
   }
   // console.log(index);
+  // console.log(allStationMarkers);
+  return allStationMarkers;
 }
 
 //makes a marker on the map given map, coords, and a string for some info
-var makeMarker = (map, lat1, lng1, info) => {
+var makeMarker = (map, lat1, lng1, info, id) => {
   const infowindow = new google.maps.InfoWindow({
     content: '<p>' + info + '</p>',
     ariaLabel: "Times New Roman",
@@ -63,9 +88,12 @@ var makeMarker = (map, lat1, lng1, info) => {
   const marker = new google.maps.Marker({
     position: { lat: lat1, lng: lng1 },
     map,
-    title: "Hello World!",
+    // title: "Hello World!",
+    title: ""+id,
     icon: "../static/blue-icon.png",
   });
+
+  // allStationMarkers.push(marker);
 
   marker.addListener("click", () => {
     infowindow.open({
@@ -73,9 +101,11 @@ var makeMarker = (map, lat1, lng1, info) => {
       map,
     });
   });
+
+  return marker;
 }
 
-// let button_map = document.getElementById("button_map");
+let button_map = document.getElementById("button_map");
 // button_map.addEventListener("click", initMap);
 let button = document.getElementById("submit");
 
