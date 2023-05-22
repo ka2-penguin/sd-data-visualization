@@ -21,6 +21,18 @@ def get_trips(filters) -> list[list[str]]:
     db_close()
     return results
 
+def get_lat_lng(station_id: int) -> tuple[float, float]:
+    c = db_connect()
+    result = list(c.execute(f"SELECT * FROM stations WHERE station_id = {station_id}", ()))
+    db_close()
+    
+    lat = float(result[3])
+    print(lat)
+    lng = float(result[4])
+    print(lng)
+
+    return (lat, lng)
+
 def create_sql_filter(filters: dict[str, str]) -> str:
     filter = f"SELECT * FROM trips"
     # will not work becuase the dict still has stuff inside, even if they are empty strings

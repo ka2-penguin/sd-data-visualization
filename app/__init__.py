@@ -19,6 +19,7 @@ def root(results=[], text="hello there"):
         print(type(filters))
         print(filters)
         search_results = read_data.get_trips(filters)
+
         sample_text = "post request"
         return redirect('/trip-search-results')
     print(text)

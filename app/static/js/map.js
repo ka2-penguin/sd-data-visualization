@@ -11,7 +11,7 @@
 let map;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
-  const center = { lat: 40.730610, lng: -73.935242 };
+  const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
   const radius = .5;
   const zoom = 11;
 
@@ -37,17 +37,18 @@ async function initMap(data) {
     panel: document.getElementById("map"),
   });
 
-  directionsRenderer.addListener("directions_changed", () => {
-    const directions = directionsRenderer.getDirections();
+  // directionsRenderer.addListener("directions_changed", () => {
+  //   const directions = directionsRenderer.getDirections();
 
-    if (directions) {
-      computeTotalDistance(directions);
-    }
-  });
+  //   if (directions) {
+  //     computeTotalDistance(directions);
+  //   }
+  // });
 
   displayRoute(
-    { lat: -34.397, lng: 150.644 },
-    { lat: -34.397, lng: 150.644 },
+    // Replace with two stations later 
+    { lat: 40.717805, lng: -74.014072 }, 
+    { lat: 40.708455, lng: -73.999741 },
     directionsService,
     directionsRenderer
   );
@@ -149,4 +150,4 @@ function computeTotalDistance(result) {
 let button_map = document.getElementById("button_map");
 let button = document.getElementById("submit");
 button_map.addEventListener("click", initMap);
-// window.initMap = initMap;
+window.initMap = initMap;
