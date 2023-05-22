@@ -17,6 +17,7 @@ def get_trips(filters) -> list[list[str]]:
     c = db_connect()
     filter = create_sql_filter(filters)
     results = list(c.execute(filter, ()))
+    print(results)
     db_close()
     return results
 
