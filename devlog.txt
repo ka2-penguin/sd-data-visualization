@@ -143,3 +143,11 @@ mayaM -- 2023-05-22 10:13
 - added info on data and updated roles in README
 - map marker image centered properly
 ==============================================================
+
+mayaM -- 2023-05-23 08:32
+--------------------------------------------------------------
+- updated design doc
+- site map includes results page
+- stations table store time and date with ints not strings
+- some roles added
+==============================================================
