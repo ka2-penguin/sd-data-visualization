@@ -114,7 +114,7 @@ var redraw = (title, labelX, labelY, data, max) => {
 
 	for (var i = 0; i < data.length; i++){
 		//ctx.fillStyle = 'rgba(255,0,0,1)';
-		var gradient = ctx.createLinearGradient(3 * height / 4, 0, 3 * height / 4 - ((data[i][1] / max) * maxBoxHeight), 0);
+		var gradient = ctx.createLinearGradient(0,3 * height / 4,0, 3 * height / 4 - ((data[i][1] / max) * maxBoxHeight));
 		gradient.addColorStop(0, "green");
 		gradient.addColorStop(0.5, "cyan");
 		gradient.addColorStop(1, "green");
