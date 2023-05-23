@@ -10,9 +10,8 @@
 
 let map;
 async function initMap(data) {
-  //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
-  const center = { lat: 40.730610, lng: -73.935242 };
+  const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
   const radius = .5;
   const zoom = 11;
 
@@ -31,8 +30,29 @@ async function initMap(data) {
     },
   });
 
-  // makeMarker(map, 40.730610, -73.935242, 'my name is skyler white yo');
-  // var allStationMarkers;
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer({
+    draggable: false,
+    map,
+    panel: document.getElementById("map"),
+  });
+
+  // directionsRenderer.addListener("directions_changed", () => {
+  //   const directions = directionsRenderer.getDirections();
+
+  //   if (directions) {
+  //     computeTotalDistance(directions);
+  //   }
+  // });
+
+  displayRoute(
+    // Replace with two stations later 
+    { lat: 40.717805, lng: -74.014072 }, 
+    { lat: 40.708455, lng: -73.999741 },
+    directionsService,
+    directionsRenderer
+  );
+
   const stationMarkers = await showStations().then();
   console.log(stationMarkers);
   let button = document.getElementById("clear_markers");
@@ -41,10 +61,8 @@ async function initMap(data) {
 
 var clearMarkers = (markers) => {
   var marker;
-  // console.log(markers);
   for (index in markers){
     marker = markers[index];
-    // console.log(marker);
     marker.setMap(null);
   }
 }
@@ -52,29 +70,18 @@ var clearMarkers = (markers) => {
 async function showStations(){
   const response = await fetch('../static/data/stations.json');
   const stations_data = await response.json();
-// function showStations(){
   var allStationMarkers = new Array();
-//   const response = require('../static/data/stations.json');
-  // console.log(response)
-  // const stations_data = JSON.parse(response);//response.json();
-  // console.log(stations_data);
-  // const stations_data = JSON.parse(stations);
-  // let marker;
   let marker_promise;
   for (index in stations_data) {
     const station = stations_data[index];
-    // console.log(station);
     const lat = station[2];
     const lng = station[3];
     const name = station[1];
     const id = station[0];
     const info = name + '<br>id: '+id
-    // console.log(lat);
     marker_promise = makeMarker(map, lat, lng, info, id);
     allStationMarkers.push(marker_promise);
   }
-  // console.log(index);
-  // console.log(allStationMarkers);
   return allStationMarkers;
 }
 
@@ -85,16 +92,12 @@ var makeMarker = (map, lat1, lng1, info, id) => {
     content: '<div id="marker"><h6>' + arr[0] + '</h6><p>Station ID: ' + arr[1] + '</p></div>',
     ariaLabel: "Times New Roman",
   });
-  // console.log(lat1);
   const marker = new google.maps.Marker({
     position: { lat: lat1, lng: lng1 },
     map,
-    // title: "Hello World!",
     title: ""+id,
     icon: "../static/blue-icon.png",
   });
-
-  // allStationMarkers.push(marker);
 
   marker.addListener("mousemove", () => {
     infowindow.open({
@@ -113,10 +116,38 @@ var makeMarker = (map, lat1, lng1, info, id) => {
   return marker;
 }
 
-let button_map = document.getElementById("button_map");
-// button_map.addEventListener("click", initMap);
-let button = document.getElementById("submit");
+function displayRoute(origin, destination, service, display) {
+  service
+    .route({
+      origin: origin,
+      destination: destination,
+      travelMode: google.maps.TravelMode.BICYCLING,
+    })
+    .then((result) => {
+      display.setDirections(result);
+    })
+    .catch((e) => {
+      alert("Could not display directions due to: " + e);
+    });
+}
 
+function computeTotalDistance(result) {
+  let total = 0;
+  const myroute = result.routes[0];
+
+  if (!myroute) {
+    return;
+  }
+
+  for (let i = 0; i < myroute.legs.length; i++) {
+    total += myroute.legs[i].distance.value;
+  }
+
+  total = total / 1000;
+  document.getElementById("total").innerHTML = total + " km";
+}
+
+let button_map = document.getElementById("button_map");
+let button = document.getElementById("submit");
 button_map.addEventListener("click", initMap);
-initMap()
-// button_map.addEventListener("click", showStations);
+window.initMap = initMap;

@@ -1,80 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title> Citibike Routes Map </title>
+	<head>
+		<title> Citibike Routes Map </title>
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- CSS linking -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="../static/css/style.css">
+		<!-- CSS linking -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="../static/css/style.css">
+	</head>
+	<body>
+		<h1>Map of Routes between Citibike Docks</h1>
 
+		<form method="post" id="query">
+		<select id="results">
+			{% for result in results %}
+			<!-- replace the value with a comma sepperated list of lat lng values for start and end station ids-->
+			<option value="{{loop.index}}">{{result}}</option>
+			{% endfor %}
+		</select>
+		</form>
 
-</head>
-    <h1>Map of Routes between Citibike Docks</h1>
+		<button id="button_map">click here for map</button>
+		<button id="clear_markers">clear station markers</button>
+		<div id="map"></div>
 
-    <!-- <p>{{results}}</p> -->
-    <!-- <p>{{text}}</p> -->
-
-    <form method="post" id="query">
-      <select id="results">
-        {% for result in results %}
-          <option value="{{loop.index}}">{{result}}</option>
-        {% endfor %}
-        <!-- <option value=""></option> -->
-      </select>
-    </form>
-
-    <button id="button_map">click here for map</button>
-    <button id="clear_markers">clear station markers</button>
-    <div id="map"></div>
-
-    <canvas width="100%" height="500" id="playground"></canvas>
-</body>
-
-	<!-- JS linking
-  <script type="text/javascript">
-    window.onload = function() {
-      document.getElementById("submit").onclick = doWork;
-    } 
-
-    function doWork() {
-		console.log($("#filters").serialize());
-		// ajax the JSON to the server
-		var filters = {
-	        "min_trip_duration": document.getElementById("min_trip_duration").value,
-	        "max_trip_duration": document.getElementById("max_trip_duration").value,
-	        "min_date": document.getElementById("min_date").value,
-	        "max_date": document.getElementById("max_date").value,
-	        "min_time": document.getElementById("min_time").value,
-	        "max_time": document.getElementById("max_time").value,
-	        // "is_member": document.getElementById("is_member").checked,
-          "is_member": document.getElementById("is_member").value,
-	        "start_station_id": document.getElementById("start_station_id").value,
-	        "end_station_id": document.getElementById("end_station_id").value,
-      	}
-
-	    $.ajax({
-			type: 'POST',
-			url: '/',
-			// data: JSON.stringify(cars),
-			data: JSON.stringify(filters),
-			success: function(data) { 
-			alert('data: ' + data);
-			},
-			// error: function() {
-			// alert("something went wrong")
-			// },
-			contentType: "application/json",
-			dataType: 'json'
-		});
-		// stop link reloading the page
-		event.preventDefault(); 
-    }
-  	</script> -->
+		<canvas width="100%" height="500" id="playground"></canvas>
+	</body>
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>
