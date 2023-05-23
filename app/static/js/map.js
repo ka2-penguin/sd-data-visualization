@@ -30,28 +30,20 @@ async function initMap(data) {
     },
   });
 
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer({
-    draggable: false,
-    map,
-    panel: document.getElementById("map"),
-  });
-
-  // directionsRenderer.addListener("directions_changed", () => {
-  //   const directions = directionsRenderer.getDirections();
-
-  //   if (directions) {
-  //     computeTotalDistance(directions);
-  //   }
+  // const directionsService = new google.maps.DirectionsService();
+  // const directionsRenderer = new google.maps.DirectionsRenderer({
+  //   draggable: false,
+  //   map,
+  //   panel: document.getElementById("map"),
   // });
 
-  displayRoute(
-    // Replace with two stations later 
-    { lat: 40.717805, lng: -74.014072 }, 
-    { lat: 40.708455, lng: -73.999741 },
-    directionsService,
-    directionsRenderer
-  );
+  // displayRoute(
+  //   // Replace with two stations later 
+  //   { lat: 40.717805, lng: -74.014072 }, 
+  //   { lat: 40.708455, lng: -73.999741 },
+  //   directionsService,
+  //   directionsRenderer
+  // );
 
   const stationMarkers = await showStations().then();
   console.log(stationMarkers);

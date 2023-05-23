@@ -66,19 +66,6 @@
 
 						<input type="reset" value="Reset" id="reset">
 						<input type="submit" value="Submit" id="submit">
-
-						</form>
-
-						<p>{{results}}</p>
-						<p>{{text}}</p>
-
-						<form method="post" id="query">
-						<select id="results">
-						{% for result in results %}
-						  <option value="{{loop.index}}">{{result}}</option>
-						{% endfor %}
-						<!-- <option value=""></option> -->
-						</select>
 					</form>
 				</div>
     		</div>
@@ -110,7 +97,7 @@
 	        "max_date": document.getElementById("max_date").value,
 	        "min_time": document.getElementById("min_time").value,
 	        "max_time": document.getElementById("max_time").value,
-          "is_member": document.getElementById("is_member").value,
+          	"is_member": document.getElementById("is_member").value,
 	        "start_station_id": document.getElementById("start_station_id").value,
 	        "end_station_id": document.getElementById("end_station_id").value,
       	}
