@@ -45,10 +45,19 @@
 								</div>
 							</div>
 						</div>
-						<label for="min_time">Start time range:</label><br>
-						<input type="time" id="min_time" name="min_time"><br>
-						<!-- <label for="max_time">Lastest start time:</label> -->
-						<input type="time" id="max_time" name="max_time"><br>
+						<label for="min_time">Time range:</label><br>
+
+						<div class="container text-center">
+					    	<div class="row">
+					    		<div class="col-6">
+									<input type="time" id="min_time" name="min_time"><br>
+								</div>
+								<div class="col-6">
+									<!-- <label for="max_date">Lastest date:</label><br> -->
+									<input type="time" id="max_time" name="max_time"><br>
+								</div>
+							</div>
+						</div>
 
 						<label for="is_member">Member?:</label>
 						<select id="is_member" name="is_member"><br>
@@ -58,11 +67,20 @@
 						</select>
 						<br>
 
-						<label for="start_station_id">Start Station ID:</label>
-						<input type="text" id="start_station_id" name="start_station_id"><br>
+						<label for="min_time">Station ID:</label><br>
+						<div class="container text-center">
+					    	<div class="row">
+					    		<div class="col-6">
+									<input type="text" id="start_station_id" name="start_station_id"><br>
+								</div>
+								<div class="col-6">
+									<!-- <label for="max_date">Lastest date:</label><br> -->
+									<input type="text" id="end_station_id" name="end_station_id"><br>
+								</div>
+							</div>
+						</div>
 
-						<label for="end_station_id">End Station ID:</label>
-						<input type="text" id="end_station_id" name="end_station_id"><br>
+						<hr>
 
 						<input type="reset" value="Reset" id="reset">
 						<input type="submit" value="Submit" id="submit">

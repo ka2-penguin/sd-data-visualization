@@ -36,6 +36,8 @@ input,select{
 #top-block{
 	padding-bottom:10px;
 	padding-top:10px;
+	padding-left:100px;
+	padding-right:100px;
 	width: 100%;
 	border: 3px solid rgb(0,0,150);
 	border-left: 20px solid rgb(0,0,150);
