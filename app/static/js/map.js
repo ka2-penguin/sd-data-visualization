@@ -46,8 +46,8 @@ async function initMap(data) {
 
   const stationMarkers = await showStations().then();
   // console.log(stationMarkers);
-  let button = document.getElementById("clear_markers");
-  button.addEventListener("click", function() {clearMarkers(stationMarkers);});
+  // let button = document.getElementById("clear_markers");
+  // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
 } 
 
 var clearMarkers = (markers) => {

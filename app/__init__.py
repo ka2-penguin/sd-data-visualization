@@ -8,7 +8,7 @@ app = Flask(__name__)
 search_results = []
 
 api_key = load_key()
-print(f'{api_key = }')
+# print(f'{api_key = }')
 
 @app.route('/', methods=["GET","POST"])
 def root(results=[], text="hello there"):

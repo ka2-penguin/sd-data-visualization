@@ -80,7 +80,7 @@
 
 						<hr>
 
-						<input type="reset" value="Reset" id="reset">
+						<!-- <input type="reset" value="Reset" id="reset"> -->
 						<input type="submit" value="Submit" id="submit">
 						<p id="loading"></p>
 					</form>
@@ -88,7 +88,7 @@
     		</div>
 			<div class="col-9">
 				<button id="button_map">Reload Map</button>
-				<button id="clear_markers">Clear Station Markers</button>
+				<!-- <button id="clear_markers">Clear Station Markers</button> -->
 				<div id="map"></div>
 			</div>
 		</div>
@@ -101,11 +101,13 @@
 
 	<!-- JS linking -->
   <script type="text/javascript">
+	var already_submitted = false;
     window.onload = function() {
-      document.getElementById("submit").onclick = doWork;
+		document.getElementById("submit").onclick = doWork;
     } 
 
     function doWork() {
+		document.getElementById("submit").setAttribute("disabled",true);
 		console.log($("#filters").serialize());
 		// ajax the JSON to the server
 		var filters = {
@@ -141,7 +143,7 @@
     }
 	var loading = () => {
 		// document.
-		console.log('in loading');
+		// console.log('in loading');
 		var element = document.getElementById('loading');
 		element.innerHTML = "Loading...";
 	}
