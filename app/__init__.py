@@ -5,31 +5,21 @@ import read_data
 
 app = Flask(__name__)
 search_results = []
-sample_text = "not changed"
 
 @app.route('/', methods=["GET","POST"])
 def root(results=[], text="hello there"):
     global search_results 
-    global sample_text
     filters = ""
     print("before post method")
     if request.method == "POST":
-        print("got the post method")
         filters = request.get_json()
-        print(type(filters))
-        print(filters)
         search_results = read_data.get_trips(filters)
-
-        sample_text = "post request"
         return redirect('/trip-search-results')
     print(text)
     return render_template("index.html",results=results,text=text)
 
 @app.route('/trip-search-results', methods=["GET","POST"])
 def got_form():
-    print("in got_form")
-    print(f'{search_results[0] = }')
-    print(f'{sample_text = }')
     display_search_results = prettier_results(search_results)
     csv_coords_list = read_data.get_csv_coords_list(search_results)
     return render_template("results.html", results=display_search_results,option_values=csv_coords_list)
