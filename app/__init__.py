@@ -2,9 +2,13 @@ from flask import Flask, render_template, session, request, redirect, jsonify, u
 import json
 import read_data
 # import load_stations
+from load_key import load_key
 
 app = Flask(__name__)
 search_results = []
+
+api_key = load_key()
+print(f'{api_key = }')
 
 @app.route('/', methods=["GET","POST"])
 def root(results=[], text="hello there"):
@@ -16,13 +20,13 @@ def root(results=[], text="hello there"):
         search_results = read_data.get_trips(filters)
         return redirect('/trip-search-results')
     print(text)
-    return render_template("index.html",results=results,text=text)
+    return render_template("index.html",results=results,text=text,key=api_key)
 
 @app.route('/trip-search-results', methods=["GET","POST"])
 def got_form():
     display_search_results = prettier_results(search_results)
     csv_coords_list = read_data.get_csv_coords_list(search_results)
-    return render_template("results.html", results=display_search_results,option_values=csv_coords_list)
+    return render_template("results.html", results=display_search_results,option_values=csv_coords_list,key=api_key)
 
     # return render_template("index2.html", results=search_results,text=sample_text)
 
