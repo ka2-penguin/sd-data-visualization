@@ -29,6 +29,10 @@ input,select{
   border-radius:20px;
 }
 
+#marker{
+	color:black;
+}
+
 #top-block{
 	padding-bottom:10px;
 	padding-top:10px;
