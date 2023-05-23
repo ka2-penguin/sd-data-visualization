@@ -14,59 +14,73 @@
 
 </head>
 <body>
-    <h1>Citibike Routes Map</h1>
+    <h1>Citibike Routes Map for 2022</h1>
     <div id="top-block" class="container text-center">
-    	<div class="row">
+	    <div class="row">
     		<div class="col-3">
-    			<form method="post" id="filters">
-					<label for="min_trip_duration">Minimum trip duration (in seconds):</label><br>
-					<input type="text" id="min_trip_duration" name="min_trip_duration"><br>
+    			<div id="center-vertically">
+	    			<form method="post" id="filters">
+						<label for="max_trip_duration">Trip duration (in seconds):</label><br>
+	    				<div class="container text-center">
+					    	<div class="row">
+					    		<div class="col-6">
+									<input type="text" id="min_trip_duration" name="min_trip_duration"><br>
+								</div>
+					    		<div class="col-6">
+									<input type="text" id="max_trip_duration" name="max_trip_duration"><br>
+								</div>
+							</div>
+						</div>
 
-					<label for="max_trip_duration">Maximum trip duration (in seconds):</label><br>
-					<input type="text" id="max_trip_duration" name="max_trip_duration"><br>
 
+						<label for="min_date">Date range:</label><br>
+						<div class="container text-center">
+					    	<div class="row">
+					    		<div class="col-6">
+									<input type="date" id="min_date" name="min_date">
+								</div>
+								<div class="col-6">
+									<!-- <label for="max_date">Lastest date:</label><br> -->
+									<input type="date" id="max_date" name="max_date"><br>
+								</div>
+							</div>
+						</div>
+						<label for="min_time">Start time range:</label><br>
+						<input type="time" id="min_time" name="min_time"><br>
+						<!-- <label for="max_time">Lastest start time:</label> -->
+						<input type="time" id="max_time" name="max_time"><br>
 
-					<label for="min_date">Date range:</label><br>
-					<input type="date" id="min_date" name="min_date">
+						<label for="is_member">Member?:</label>
+						<select id="is_member" name="is_member"><br>
+						<option value="">All</option>
+						<option value="True">Members only</option>
+						<option value="False">Non-members only</option>
+						</select>
+						<br>
 
-					<!-- <label for="max_date">Lastest date:</label><br> -->
-					<input type="date" id="max_date" name="max_date"><br>
+						<label for="start_station_id">Start Station ID:</label>
+						<input type="text" id="start_station_id" name="start_station_id"><br>
 
-					<label for="min_time">Start time range:</label><br>
-					<input type="time" id="min_time" name="min_time"><br>
-					<!-- <label for="max_time">Lastest start time:</label> -->
-					<input type="time" id="max_time" name="max_time"><br>
+						<label for="end_station_id">End Station ID:</label>
+						<input type="text" id="end_station_id" name="end_station_id"><br>
 
-					<label for="is_member">Types of users:</label>
-					<select id="is_member" name="is_member"><br>
-					<option value="">All</option>
-					<option value="True">Members only</option>
-					<option value="False">Non-members only</option>
-					</select>
-					<br>
+						<input type="reset" value="Reset" id="reset">
+						<input type="submit" value="Submit" id="submit">
 
-					<label for="start_station_id">Start Station ID:</label>
-					<input type="text" id="start_station_id" name="start_station_id"><br>
+						</form>
 
-					<label for="end_station_id">End Station ID:</label>
-					<input type="text" id="end_station_id" name="end_station_id"><br>
+						<p>{{results}}</p>
+						<p>{{text}}</p>
 
-					<input type="reset" value="Reset" id="reset">
-					<input type="submit" value="Submit" id="submit">
-
+						<form method="post" id="query">
+						<select id="results">
+						{% for result in results %}
+						  <option value="{{loop.index}}">{{result}}</option>
+						{% endfor %}
+						<!-- <option value=""></option> -->
+						</select>
 					</form>
-
-					<p>{{results}}</p>
-					<p>{{text}}</p>
-
-					<form method="post" id="query">
-					<select id="results">
-					{% for result in results %}
-					  <option value="{{loop.index}}">{{result}}</option>
-					{% endfor %}
-					<!-- <option value=""></option> -->
-					</select>
-				</form>
+				</div>
     		</div>
 			<div class="col-9">
 				<button id="button_map">Reload Map</button>

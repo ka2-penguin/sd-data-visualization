@@ -1,10 +1,11 @@
 body, html{
-	height: 100%;
 	margin: 0;
 	padding: 0;
 	font-family:Optima, Garamond, serif;
-	background-color:rgba(0,0,200,0.3);
-	background-image:linear-gradient(to top, rgba(0,100,255,0.2), rgba(0,0,255,0.0));
+	background-image:url(https://nypost.com/wp-content/uploads/sites/2/2020/03/citi_bike.jpg?quality=75&strip=all), linear-gradient(to top, rgba(10,10,10,0.8), rgba(10,10,10,0.3));
+	background-attachment:fixed;
+	background-blend-mode:darken;
+	color:white;
 }
 
 h1 {
@@ -15,7 +16,12 @@ h1 {
 
 input,select{
 	height:30px;
+	width:100%;
 	border-radius:10px;
+}
+
+.col-6 input{
+	width:120%;
 }
 
 #map {
@@ -25,10 +31,17 @@ input,select{
 
 #top-block{
 	padding-bottom:10px;
+	padding-top:10px;
 	width: 100%;
-	border: 5px solid black;
+	border: 3px solid rgb(0,0,150);
+	border-left: 20px solid rgb(0,0,150);
+	background-image:linear-gradient(to right, rgba(0,0,150,0.3), rgba(0,0,255,0.0));
 }
 
-#marker{
-
+#center-vertically{
+	margin: 0;
+	position:absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }

@@ -71,11 +71,9 @@ var redraw = (title, labelX, labelY, data, max) => {
 	bike_data = data;
 	max_height = max;
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.fillRect(0,0, width, height);
 
     //title + labels
-    ctx.fillStyle = 'rgb(10,10,10)';
+    ctx.fillStyle = 'rgb(255,255,255)';
     ctx.textRendering = "optimizeLegibility";
     ctx.font = (width / 20) + "px Arial";
     ctx.textAlign = "center";
@@ -91,10 +89,12 @@ var redraw = (title, labelX, labelY, data, max) => {
 	ctx.restore();
 
     //axes
+    ctx.strokeStyle = 'rgb(255,255,255)';
+    ctx.lineWidth = 2;
     ctx.beginPath();
 	ctx.moveTo(5*width/48, height/6);
-	ctx.lineTo(5*width/48, 3 * height / 4);
-	ctx.lineTo(11 * width/12, 3 * height / 4);
+	ctx.lineTo(5*width/48, 1 + 3 * height / 4);
+	ctx.lineTo(11 * width/12, 1 + 3 * height / 4);
 	ctx.stroke();
 	ctx.closePath();
 
@@ -113,11 +113,16 @@ var redraw = (title, labelX, labelY, data, max) => {
 	ctx.fillText(max, 5*width/48 - 5*width/110, 73*height/96 - maxBoxHeight);
 
 	for (var i = 0; i < data.length; i++){
-		ctx.fillStyle = 'rgba(255,0,0,1)';
+		//ctx.fillStyle = 'rgba(255,0,0,1)';
+		var gradient = ctx.createLinearGradient(3 * height / 4, 0, 3 * height / 4 - ((data[i][1] / max) * maxBoxHeight), 0);
+		gradient.addColorStop(0, "green");
+		gradient.addColorStop(0.5, "cyan");
+		gradient.addColorStop(1, "green");
+		ctx.fillStyle = gradient;
 		ctx.fillRect(boxWidth * i + width/8,3 * height / 4 - ((data[i][1] / max) * maxBoxHeight), boxWidth, (data[i][1] / max) * maxBoxHeight);
 		ctx.fillStyle = 'rgba(0,0,255,0.4)';
 		ctx.fillRect(boxWidth * i + width/8,3 * height / 4 - ((data[i][2] / max) * maxBoxHeight), boxWidth, (data[i][2] / max) * maxBoxHeight);
-		ctx.fillStyle = 'rgb(10,10,10)';
+		ctx.fillStyle = 'rgb(255,255,255)';
 		ctx.font = (width / 80) + "px Arial";
 		ctx.fillText(data[i][0], boxWidth * (i + 0.5) + width/8,19 * height / 24);
 	}
