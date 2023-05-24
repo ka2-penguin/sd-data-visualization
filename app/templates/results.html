@@ -16,14 +16,14 @@
 <body>
     <h1><a href="/">Citibike Routes Map for 2022</a></h1>
 
-    <form method="post" id="query">
+    <!-- <form method="post" id="query"> -->
       <select id="results">
         {% for result in results %}
-          <option value="{{option_values[loop.index]}}">{{result}}</option>
+          <option value="{{option_values[loop.index-1]}}">{{result}}</option>
         {% endfor %}
       </select>
-	  <input type="submit">
-    </form>
+	  <!-- <input type="submit"> -->
+    <!-- </form> -->
 
     <button id="button_map">click here for map</button>
     <button id="clear_markers">clear station markers</button>

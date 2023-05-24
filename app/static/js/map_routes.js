@@ -1,12 +1,15 @@
+const apiKey = document.getElementById("api-key").innerHTML;
 // Initialize and add the map
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
   ({
-    key: "AIzaSyBm90rp3Nys_NhgCMY5zRTTMTTLbaPzeZs",
+    key: apiKey,
     // Add other bootstrap parameters as needed, using camel case.
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
 
 let map;
+let directionsRenderer;
+let directionsService;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
@@ -28,30 +31,85 @@ async function initMap(data) {
     },
   });
 
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer({
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer({
     draggable: false,
     map,
     panel: document.getElementById("map"),
   });
 
-  var result = document.getElementById("results").value.split(",")
+  var e = document.getElementById("results");
+  // var results = e.value.split(",");
+  var results = e.options[e.selectedIndex].value.split(",");
+  console.log(typeof(results));
+  // var text = e.options[e.selectedIndex].text;
+
+  // var results = document.getElementById("results").value.split(",");
+  console.log(results);
 
   displayRoute(
     // Replace with two stations later 
     // { lat: 40.717805, lng: -74.014072 }, 
     // { lat: 40.708455, lng: -73.999741 },
-    {lat: result[0], lng: result[1]},
-    {lat: result[2], lng: result[3]},
+    {lat: parseFloat(results[0]), lng: parseFloat(results[1])},
+    {lat: parseFloat(results[2]), lng: parseFloat(results[3])},
     directionsService,
     directionsRenderer
   );
 
   const stationMarkers = await showStations().then();
-  console.log(stationMarkers);
-  let button = document.getElementById("clear_markers");
-  button.addEventListener("click", function() {clearMarkers(stationMarkers);});
+  // console.log(stationMarkers);
+  // let button = document.getElementById("clear_markers");
+  // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
 } 
+
+async function showStations(){
+  const response = await fetch('../static/data/stations.json');
+  const stations_data = await response.json();
+  var allStationMarkers = new Array();
+  let marker_promise;
+  for (index in stations_data) {
+    const station = stations_data[index];
+    const lat = station[2];
+    const lng = station[3];
+    const name = station[1];
+    const id = station[0];
+    const info = name + '<br>id: '+id
+    marker_promise = makeMarker(map, lat, lng, info, id);
+    allStationMarkers.push(marker_promise);
+  }
+  return allStationMarkers;
+}
+
+var makeMarker = (map, lat1, lng1, info, id) => {
+  const arr = info.split('id: ');
+  const infowindow = new google.maps.InfoWindow({
+    content: '<div id="marker"><h6>' + arr[0] + '</h6><p>Station ID: ' + arr[1] + '</p></div>',
+    ariaLabel: "Times New Roman",
+  });
+  const marker = new google.maps.Marker({
+    position: { lat: lat1, lng: lng1 },
+    map,
+    title: ""+id,
+    icon: "../static/blue-icon.png",
+  });
+
+  marker.addListener("mousemove", () => {
+    infowindow.open({
+      anchor: marker,
+      map,
+    });
+  });
+
+  marker.addListener("mouseout", () => {
+    infowindow.close({
+      anchor: marker,
+      map,
+    });
+  });
+
+  return marker;
+}
 
 function displayRoute(origin, destination, service, display) {
   service
@@ -84,8 +142,33 @@ function computeTotalDistance(result) {
   document.getElementById("total").innerHTML = total + " km";
 }
 
+var updateRoute = () => {
+  var e = document.getElementById("results");
+  // var results = e.value.split(",");
+  var results = e.options[e.selectedIndex].value.split(",");
+  console.log(typeof(results));
+  var text = e.options[e.selectedIndex].text;
+  console.log(text);
+
+  // var results = document.getElementById("results").value.split(",");
+  console.log(results);
+
+  displayRoute(
+    // Replace with two stations later 
+    // { lat: 40.717805, lng: -74.014072 }, 
+    // { lat: 40.708455, lng: -73.999741 },
+    {lat: parseFloat(results[0]), lng: parseFloat(results[1])},
+    {lat: parseFloat(results[2]), lng: parseFloat(results[3])},
+    directionsService,
+    directionsRenderer
+  );  
+}
+
 let button_map = document.getElementById("button_map");
-let button = document.getElementById("submit");
+// let button = document.getElementById("submit");
 button_map.addEventListener("click", initMap);
 window.initMap = initMap;
 initMap()
+
+let dropdown = document.getElementById("results");
+dropdown.addEventListener("change",updateRoute);
