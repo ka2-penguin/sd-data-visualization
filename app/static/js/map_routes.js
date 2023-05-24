@@ -10,6 +10,7 @@ const apiKey = document.getElementById("api-key").innerHTML;
 let map;
 let directionsRenderer;
 let directionsService;
+var show_markers = true;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
@@ -61,6 +62,8 @@ async function initMap(data) {
   // console.log(stationMarkers);
   // let button = document.getElementById("clear_markers");
   // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
+  let button = document.getElementById("clear_markers");
+  button.addEventListener("click", function() {changeMarkers(stationMarkers);});
 } 
 
 async function showStations(){
@@ -162,6 +165,25 @@ var updateRoute = () => {
     directionsService,
     directionsRenderer
   );  
+}
+
+var changeMarkers = (markers,) => {
+  show_markers = ! show_markers;
+  var marker;
+  for (index in markers){
+    marker = markers[index];
+    // marker.setMap(null);
+    if (show_markers) {
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  }
+  if (show_markers) {
+    document.getElementById('clear_markers').innerHTML = 'Clear station markers';
+  } else {
+    document.getElementById('clear_markers').innerHTML = 'Show station markers';
+  }
 }
 
 let button_map = document.getElementById("button_map");
