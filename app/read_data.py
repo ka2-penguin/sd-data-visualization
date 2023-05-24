@@ -56,10 +56,12 @@ def create_sql_filter(filters: dict[str, str]) -> str:
 
     if filters["min_date"]:
         date = filters["min_date"].split("-")
-        filter += f" AND year >= {date[0]} AND month >= {date[1]} AND day >= {date[2]}"
+        # filter += f" AND year >= {date[0]} AND month >= {date[1]} AND day >= {date[2]}"
+        filter += f" AND month >= {date[1]} AND day >= {date[2]}"
     if filters["max_date"]:
         date = filters["max_date"].split("T")[0].split("-")
-        filter += f" AND year <= {date[0]} AND month <= {date[1]} AND day <= {date[2]}"
+        # filter += f" AND year <= {date[0]} AND month <= {date[1]} AND day <= {date[2]}"
+        filter += f" AND month >= {date[1]} AND day >= {date[2]}"
 
     if filters["min_time"]:
         time = filters["min_time"].split(":")
@@ -78,12 +80,15 @@ def create_sql_filter(filters: dict[str, str]) -> str:
     if filters["end_station_id"]:
         filter += " AND end_station_id = " + filters["end_station_id"]
     
-    if not are_filters_empty(filters):
+    # if not are_filters_empty(filters):
         # filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"
-        filter += f" ORDER BY month, day, hour, minute LIMIT {MAX_RESULTS}"
-        
-        # remove extra comma at the start of filter
-        i = filter.find("WHERE") + len("WHERE")
+    filter += f" ORDER BY month, day, hour, minute LIMIT {MAX_RESULTS}"
+    print(f'{filter = }')
+    
+    # remove extra AND at the start of filter
+    find_index = filter.find("WHERE AND")
+    if find_index != -1:
+        i = find_index + len("WHERE")
         filter = filter[:i] + filter[i+len("AND")+1:]
 
     print(f"SQL filter: {filter}")
