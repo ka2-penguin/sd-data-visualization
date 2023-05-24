@@ -15,9 +15,9 @@
 </head>
 <body>
     <h1>Citibike Routes Map for 2022</h1>
-    <div id="top-block" class="container text-center">
+    <div class="container-fluid text-center" id="top-block">
 	    <div class="row">
-    		<div class="col-3">
+    		<div class="col-4">
     			<div id="center-vertically">
 	    			<form method="post" id="filters">
 						<label for="max_trip_duration">Trip duration (in seconds):</label><br>
@@ -33,7 +33,7 @@
 						</div>
 
 
-						<label for="min_date">Date range:</label><br>
+						<br><label for="min_date">Date range:</label><br>
 						<div class="container text-center">
 					    	<div class="row">
 					    		<div class="col-6">
@@ -44,7 +44,7 @@
 								</div>
 							</div>
 						</div>
-						<label for="min_time">Time range:</label><br>
+						<br><label for="min_time">Time range:</label><br>
 
 						<div class="container text-center">
 					    	<div class="row">
@@ -56,38 +56,38 @@
 									<input type="time" id="max_time" name="max_time"><br>
 								</div>
 							</div>
-						</div>
+						</div><br>
 
-						<label for="is_member">Member?:</label>
+						<label for="is_member">Member?:</label><br>
 						<select id="is_member" name="is_member"><br>
 						<option value="">All</option>
 						<option value="True">Members only</option>
 						<option value="False">Non-members only</option>
 						</select>
-						<br>
+						<br><br>
 						<label for="min_time">Station ID:</label><br>
 						<div class="container text-center">
 					    	<div class="row">
 					    		<div class="col-6">
-									<input type="text" id="start_station_id" name="start_station_id"><br>
+									<input type="text" id="start_station_id" name="start_station_id" placeholder="Start"><br>
 								</div>
 								<div class="col-6">
 									<!-- <label for="max_date">Lastest date:</label><br> -->
-									<input type="text" id="end_station_id" name="end_station_id"><br>
+									<input type="text" id="end_station_id" name="end_station_id" placeholder="End"><br>
 								</div>
 							</div>
 						</div>
 
 						<hr>
 
-						<input type="reset" value="Reset" id="reset">
-						<input type="submit" value="Submit" id="submit">
+						<input class="coolbutton" type="reset" value="Reset" id="reset">
+						<input class="coolbutton" type="submit" value="Submit" id="submit">
 					</form>
 				</div>
     		</div>
-			<div class="col-9">
-				<button id="button_map">Reload Map</button>
-				<button id="clear_markers">Clear Station Markers</button>
+			<div class="col-8">
+				<button class="coolbutton" id="button_map">Reload Map</button>
+				<button class="coolbutton" id="clear_markers">Clear Station Markers</button><br><br>
 				<div id="map"></div>
 			</div>
 		</div>
