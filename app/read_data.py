@@ -91,7 +91,7 @@ def create_sql_filter(filters: dict[str, str]) -> str:
         i = find_index + len("WHERE")
         filter = filter[:i] + filter[i+len("AND")+1:]
 
-    filter += f"LIMIT {MAX_RESULTS}"
+    filter += f" LIMIT {MAX_RESULTS}"
     print(f"SQL filter: {filter}")
     return filter
 
