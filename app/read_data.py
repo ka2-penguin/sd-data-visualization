@@ -80,12 +80,13 @@ def create_sql_filter(filters: dict[str, str]) -> str:
     
     if not are_filters_empty(filters):
         # filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"
-        filter += f" ORDER BY month, day, hour, minute LIMIT {MAX_RESULTS}"
+        filter += f" ORDER BY month, day, hour, minute "
         
         # remove extra comma at the start of filter
         i = filter.find("WHERE") + len("WHERE")
         filter = filter[:i] + filter[i+len("AND")+1:]
 
+    filter += f"LIMIT {MAX_RESULTS}"
     print(f"SQL filter: {filter}")
     return filter
 

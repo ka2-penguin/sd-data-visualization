@@ -6,8 +6,6 @@
     // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
   });  
 
-// var allStationMarkers;
-
 let map;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
@@ -29,21 +27,6 @@ async function initMap(data) {
       },
     },
   });
-
-  // const directionsService = new google.maps.DirectionsService();
-  // const directionsRenderer = new google.maps.DirectionsRenderer({
-  //   draggable: false,
-  //   map,
-  //   panel: document.getElementById("map"),
-  // });
-
-  // displayRoute(
-  //   // Replace with two stations later 
-  //   { lat: 40.717805, lng: -74.014072 }, 
-  //   { lat: 40.708455, lng: -73.999741 },
-  //   directionsService,
-  //   directionsRenderer
-  // );
 
   const stationMarkers = await showStations().then();
   console.log(stationMarkers);
@@ -108,39 +91,8 @@ var makeMarker = (map, lat1, lng1, info, id) => {
   return marker;
 }
 
-function displayRoute(origin, destination, service, display) {
-  service
-    .route({
-      origin: origin,
-      destination: destination,
-      travelMode: google.maps.TravelMode.BICYCLING,
-    })
-    .then((result) => {
-      display.setDirections(result);
-    })
-    .catch((e) => {
-      alert("Could not display directions due to: " + e);
-    });
-}
-
-function computeTotalDistance(result) {
-  let total = 0;
-  const myroute = result.routes[0];
-
-  if (!myroute) {
-    return;
-  }
-
-  for (let i = 0; i < myroute.legs.length; i++) {
-    total += myroute.legs[i].distance.value;
-  }
-
-  total = total / 1000;
-  document.getElementById("total").innerHTML = total + " km";
-}
-
-let button_map = document.getElementById("button_map");
-let button = document.getElementById("submit");
-button_map.addEventListener("click", initMap);
+// let button_map = document.getElementById("button_map");
+// let button = document.getElementById("submit");
+// button_map.addEventListener("click", initMap);
 window.initMap = initMap;
 initMap()

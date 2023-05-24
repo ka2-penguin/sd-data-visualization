@@ -52,7 +52,6 @@
 									<input type="time" id="min_time" name="min_time"><br>
 								</div>
 								<div class="col-6">
-									<!-- <label for="max_date">Lastest date:</label><br> -->
 									<input type="time" id="max_time" name="max_time"><br>
 								</div>
 							</div>
@@ -121,16 +120,14 @@
 	    $.ajax({
 			type: 'POST',
 			url: '/',
-			// data: JSON.stringify(cars),
 			data: JSON.stringify(filters),
-			success: function(data) { 
-			alert('data: ' + data);
+			// success: function(data) { 
+			// alert('data: ' + data);
 
-			},
-			error: function() {
-			// alert("something went wrong")
-      window.location.href = "/trip-search-results";
-			},
+			// },
+			// error: function() {
+	      	// 	window.location.href = "/trip-search-results";
+			// },
 			contentType: "application/json",
 			dataType: 'json'
 		});
@@ -138,7 +135,7 @@
 		event.preventDefault(); 
     }
   	</script>
-	<script src="../static/js/map.js"></script>
+	<script src="../static/js/map_stations.js"></script>
 	<script src="../static/js/table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>
