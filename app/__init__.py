@@ -26,26 +26,9 @@ def root(results=[], text="hello there"):
 def got_form():
     display_search_results = prettier_results(search_results)
     csv_coords_list = read_data.get_csv_coords_list(search_results)
-    return render_template("results.html", results=display_search_results,option_values=csv_coords_list,key=api_key)
+    return render_template("results.html", results=display_search_results, option_values=csv_coords_list, key=api_key)
 
     # return render_template("index2.html", results=search_results,text=sample_text)
-
-@app.route("/query.json", methods=["GET", "POST"])
-def query(): 
-    if request.method == "POST":
-        with open("query.json", 'w') as f:
-            data = request.get_data(as_text=True)
-            f.write(str(data))
-            f.close()
-            print("writen data:")
-            print(data)
-
-    with open("query.json", 'r') as f:
-        data = json.load(f)
-        f.close()
-        print("read data:")
-        print(data)
-        return jsonify(data)
     
 def prettier_results(data):
     new_data = []

@@ -97,53 +97,42 @@
 </body>
 
 	<!-- JS linking -->
-  <script type="text/javascript">
-	var already_submitted = false;
-    window.onload = function() {
-		document.getElementById("submit").onclick = doWork;
-    } 
+  	<script type="text/javascript">
+		window.onload = function() {
+			document.getElementById("submit").onclick = doWork;
+		} 
 
-    function doWork() {
-		document.getElementById("submit").setAttribute("disabled",true);
-		console.log($("#filters").serialize());
-		// ajax the JSON to the server
-		var filters = {
-	        "min_trip_duration": document.getElementById("min_trip_duration").value,
-	        "max_trip_duration": document.getElementById("max_trip_duration").value,
-	        "min_date": document.getElementById("min_date").value,
-	        "max_date": document.getElementById("max_date").value,
-	        "min_time": document.getElementById("min_time").value,
-	        "max_time": document.getElementById("max_time").value,
-          	"is_member": document.getElementById("is_member").value,
-	        "start_station_id": document.getElementById("start_station_id").value,
-	        "end_station_id": document.getElementById("end_station_id").value,
-      	}
+		function doWork() {
+			document.getElementById("submit").setAttribute("disabled",true);
+			console.log($("#filters").serialize());
+			// ajax the JSON to the server
+			var filters = {
+				"min_trip_duration": document.getElementById("min_trip_duration").value,
+				"max_trip_duration": document.getElementById("max_trip_duration").value,
+				"min_date": document.getElementById("min_date").value,
+				"max_date": document.getElementById("max_date").value,
+				"min_time": document.getElementById("min_time").value,
+				"max_time": document.getElementById("max_time").value,
+				"is_member": document.getElementById("is_member").value,
+				"start_station_id": document.getElementById("start_station_id").value,
+				"end_station_id": document.getElementById("end_station_id").value,
+			}
 
-	    $.ajax({
-			type: 'POST',
-			url: '/',
-			data: JSON.stringify(filters),
-			// success: function(data) { 
-			// alert('data: ' + data);
-
-			// },
-			// error: function() {
-	      	// 	window.location.href = "/trip-search-results";
-			// },
-			contentType: "application/json",
-			dataType: 'json'
-		});
-		// stop link reloading the page
-		event.preventDefault(); 
-    }
-	var loading = () => {
-		// document.
-		// console.log('in loading');
-		var element = document.getElementById('loading');
-		element.innerHTML = "Loading...";
-	}
-	let submit_button = document.getElementById("submit");
-	submit_button.addEventListener("click", loading);
+			$.ajax({
+				type: 'POST',
+				url: '/',
+				data: JSON.stringify(filters),
+				contentType: "application/json",
+				dataType: 'json'
+			});
+			event.preventDefault();  // stop link reloading the page
+		}
+		var loading = () => {
+			var element = document.getElementById('loading');
+			element.innerHTML = "Loading...";
+		}
+		let submit_button = document.getElementById("submit");
+		submit_button.addEventListener("click", loading);
   	</script>
 	<script src="../static/js/map_stations.js"></script>
 	<script src="../static/js/table.js"></script>

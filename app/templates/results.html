@@ -32,6 +32,22 @@
 	<span hidden id="api-key">{{key}}</span>
 </body>
 
+  <script>
+    window.onload = function() {
+			document.getElementById("submit").onclick = doWork;
+		}
+
+    function doWork() {
+			document.getElementById("submit").setAttribute("disabled",true);
+      var result = document.getElementById("results").value.split(",")
+      var route = {
+        "start_lat": result[0], 
+        "start lng": result[1],
+        "end_lat": result[2],
+        "end_lng": result[3],
+      }
+    } 
+  </script>
 	<script src="../static/js/map_routes.js"></script>
 	<script src="../static/js/table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
