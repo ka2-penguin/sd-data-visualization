@@ -80,6 +80,9 @@
 						<hr>
 						<input class="coolbutton" type="reset" value="Reset" id="reset">
 						<input class="coolbutton" type="submit" value="Submit" id="submit">
+
+						<!-- for laoding text -->
+						<p id="loading"></p>
 					</form>
 				</div>
     		</div>
@@ -103,8 +106,8 @@
 		} 
 
 		function doWork() {
-			document.getElementById("submit").setAttribute("disabled",true);
-			console.log($("#filters").serialize());
+			// document.getElementById("submit").setAttribute("disabled",true);
+			// console.log($("#filters").serialize());
 			// ajax the JSON to the server
 			var filters = {
 				"min_trip_duration": document.getElementById("min_trip_duration").value,
@@ -122,11 +125,18 @@
 				type: 'POST',
 				url: '/',
 				data: JSON.stringify(filters),
+				success: function(data) { 
+					alert('data: ' + data);
+				},
+				error: function() {
+					// alert("something went wrong")
+      				window.location.href = "/trip-search-results";
+				},
 				contentType: "application/json",
 				dataType: 'json'
 				
 			});
-			window.location.href = "/trip-search-results";
+			// window.location.href = "/trip-search-results";
 			event.preventDefault();  // stop link reloading the page
 		}
 		var loading = () => {

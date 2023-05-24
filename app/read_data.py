@@ -79,6 +79,9 @@ def create_sql_filter(filters: dict[str, str]) -> str:
         filter += " AND start_station_id = " + filters["start_station_id"]
     if filters["end_station_id"]:
         filter += " AND end_station_id = " + filters["end_station_id"]
+    # if both exist, make sure they are not the same
+    if filters["start_station_id"] and filters["end_station_id"]:
+        filter += " AND start_station_id != end_station_id"
     
     # if not are_filters_empty(filters):
         # filter += f" ORDER BY year DESC LIMIT {MAX_RESULTS}"

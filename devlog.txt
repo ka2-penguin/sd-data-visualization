@@ -151,3 +151,18 @@ mayaM -- 2023-05-23 08:32
 - stations table store time and date with ints not strings
 - some roles added
 ==============================================================
+
+mayaM -- 2023-05-23 10:54
+--------------------------------------------------------------
+- submit button disables after form is submitted to prevent
+multiple sqlite threads
+- loading text to show that the site is still getting the
+trips from the database
+==============================================================
+
+mayaM -- 2023-05-23 22:40
+--------------------------------------------------------------
+- worked on hiding and showing markers using buttons
+- got trips routes to display from dropdown
+- some bugs involving sqlite queries fixed
+==============================================================
