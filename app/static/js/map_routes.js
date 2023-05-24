@@ -1,8 +1,4 @@
 const apiKey = document.getElementById("api-key").innerHTML;
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/main
 // Initialize and add the map
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
   ({
@@ -38,19 +34,18 @@ async function initMap(data) {
 
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer({
-    suppressBicyclingLayer: true,
+    suppressBicyclingLayer: true, // get rid to show bycicle routes and traffic
+    preserveViewport: true,
     draggable: false,
     map,
     panel: document.getElementById("map"),
   });
 
   var e = document.getElementById("results");
-  // var results = e.value.split(",");
   var results = e.options[e.selectedIndex].value.split(",");
   console.log(typeof(results));
-  // var text = e.options[e.selectedIndex].text;
 
-  // var results = document.getElementById("results").value.split(",");
+  var result = document.getElementById("results").value.split(",");
   console.log(results);
 
   displayRoute(
@@ -59,13 +54,6 @@ async function initMap(data) {
     directionsService,
     directionsRenderer
   );
-  const bikeLayer = new google.maps.BicyclingLayer();
-  bikeLayer.setMap(map);
-  bikeLayer.setMap(null)
-
-  // console.log(stationMarkers);
-  // let button = document.getElementById("clear_markers");
-  // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
 } 
 
 async function showStations(){
@@ -155,5 +143,5 @@ results.addEventListener("change", initMap);
 window.initMap = initMap;
 initMap()
 
-let dropdown = document.getElementById("results");
-dropdown.addEventListener("change",updateRoute);
+// let dropdown = document.getElementById("results");
+// dropdown.addEventListener("change",updateRoute);
