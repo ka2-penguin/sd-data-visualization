@@ -13,12 +13,13 @@
 
 
 </head>
-    <h1><a href="/">Map of Routes between Citibike Docks</a></h1>
+<body>
+    <h1><a href="/">Citibike Routes Map for 2022</a></h1>
 
-    <form method="post" id="query">
+    <!-- <form method="post" id="query"> -->
       <select id="results">
         {% for result in results %}
-          <option value="{{option_values[loop.index]}}">{{result}}</option>
+          <option value="{{option_values[loop.index-1]}}">{{result}}</option>
         {% endfor %}
       </select>
     </form>

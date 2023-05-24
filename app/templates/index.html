@@ -14,7 +14,7 @@
 
 </head>
 <body>
-    <h1>Citibike Routes Map for 2022</h1>
+    <h1><a href="/">Citibike Routes Map for 2022</a></h1>
     <div class="container-fluid text-center" id="top-block">
 	    <div class="row">
     		<div class="col-4">
@@ -80,6 +80,9 @@
 						<hr>
 						<input class="coolbutton" type="reset" value="Reset" id="reset">
 						<input class="coolbutton" type="submit" value="Submit" id="submit">
+
+						<!-- for laoding text -->
+						<p id="loading"></p>
 					</form>
 				</div>
     		</div>
@@ -131,7 +134,9 @@
 				},
 				contentType: "application/json",
 				dataType: 'json'
+				
 			});
+			// window.location.href = "/trip-search-results";
 			event.preventDefault();  // stop link reloading the page
 		}
 		var loading = () => {

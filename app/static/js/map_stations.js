@@ -7,6 +7,7 @@ const apiKey = document.getElementById("api-key").innerHTML;
   });  
 
 let map;
+var show_markers = true;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
@@ -30,15 +31,30 @@ async function initMap(data) {
 
   const stationMarkers = await showStations().then();
   // console.log(stationMarkers);
-  // let button = document.getElementById("clear_markers");
-  // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
+  var map_object = map;
+  if (! show_markers){
+    map_object = null;
+  }
+  let button = document.getElementById("clear_markers");
+  button.addEventListener("click", function() {changeMarkers(stationMarkers);});
 } 
 
-var clearMarkers = (markers) => {
+var changeMarkers = (markers,) => {
+  show_markers = ! show_markers;
   var marker;
   for (index in markers){
     marker = markers[index];
-    marker.setMap(null);
+    // marker.setMap(null);
+    if (show_markers) {
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  }
+  if (show_markers) {
+    document.getElementById('clear_markers').innerHTML = 'Clear station markers';
+  } else {
+    document.getElementById('clear_markers').innerHTML = 'Show station markers';
   }
 }
 
