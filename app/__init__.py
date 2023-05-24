@@ -16,6 +16,7 @@ def root(results=[], text="hello there"):
     filters = ""
     print("before post method")
     if request.method == "POST":
+        print("got post method")
         filters = request.get_json()
         search_results = read_data.get_trips(filters)
         return redirect('/trip-search-results')
@@ -28,7 +29,6 @@ def got_form():
     csv_coords_list = read_data.get_csv_coords_list(search_results)
     return render_template("results.html", results=display_search_results, option_values=csv_coords_list, key=api_key)
 
-    # return render_template("index2.html", results=search_results,text=sample_text)
     
 def prettier_results(data):
     new_data = []

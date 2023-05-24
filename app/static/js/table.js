@@ -7,8 +7,8 @@ var width = c.getBoundingClientRect().width;
 var height = c.getBoundingClientRect().height;
 
 var resize = (e) =>{
-	console.log(window.innerWidth);
-	console.log(window.innerHeight);
+	// console.log(window.innerWidth);
+	// console.log(window.innerHeight);
 	ctx.canvas.height = window.innerHeight;
 	ctx.canvas.width  = window.innerWidth;
 	
