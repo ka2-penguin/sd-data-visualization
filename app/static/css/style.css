@@ -1,4 +1,4 @@
-body, html{
+html{
 	margin: 0;
 	padding: 0;
 	font-family:Optima, Garamond, serif;
@@ -8,10 +8,24 @@ body, html{
 	color:white;
 }
 
+body{
+	margin: 0;
+	font-family:Optima, Garamond, serif;
+	background-color:rgba(0,0,0,0);
+	background-attachment:fixed;
+	background-blend-mode:darken;
+	color:white;
+}
+
 h1 {
 	font-size:70px;
 	text-align:center;
 	padding:20px;
+}
+
+a, a:hover{
+	color:white;
+	text-decoration:none;
 }
 
 input,select, button{

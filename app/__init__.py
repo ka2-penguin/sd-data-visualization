@@ -26,6 +26,7 @@ def root(results=[], text="hello there"):
 def got_form():
     display_search_results = prettier_results(search_results)
     csv_coords_list = read_data.get_csv_coords_list(search_results)
+    print(csv_coords_list)
     return render_template("results.html", results=display_search_results,option_values=csv_coords_list,key=api_key)
 
     # return render_template("index2.html", results=search_results,text=sample_text)
@@ -56,7 +57,13 @@ def prettier_results(data):
             user_type = 'member'
         else:
             user_type = 'casual'
-        new_data.append(f'{row[0]} {date} {time} {user_type} {row[6]} {row[7]}')
+        time_string = ''
+        if row[0] >= 3600:
+            time_string += str(row[0] // 3600) + ' hr '
+        if row[0] >= 60:
+            time_string += str((row[0] % 3600) // 60) + ' min '
+        time_string += str(row[0]%60) + ' sec ' 
+        new_data.append(f'{user_type}, rode on {date} {time} for {time_string}  {row[6]} {row[7]}')
     return new_data
 
 if __name__ == "__main__":
