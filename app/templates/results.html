@@ -13,8 +13,7 @@
 
 
 </head>
-<body>
-    <h1>Map of Routes between Citibike Docks</h1>
+    <h1><a href="/">Map of Routes between Citibike Docks</a></h1>
 
     <form method="post" id="query">
       <select id="results">
@@ -30,6 +29,7 @@
     <div id="map"></div>
 
     <canvas width="100%" height="500" id="playground"></canvas>
+	<span hidden id="api-key">{{key}}</span>
 </body>
 
 	<script src="../static/js/map_routes.js"></script>
