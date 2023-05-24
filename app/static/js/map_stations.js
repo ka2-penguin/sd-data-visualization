@@ -5,9 +5,8 @@ const apiKey = document.getElementById("api-key").innerHTML;
     key: apiKey,
   });  
 
-// var allStationMarkers;
-
 let map;
+var show_markers = true;
 async function initMap(data) {
   const { Map } = await google.maps.importLibrary("maps");
   const center = { lat: 40.730610, lng: -73.935242 }; // centered on NYC
@@ -29,32 +28,32 @@ async function initMap(data) {
     },
   });
 
-  // const directionsService = new google.maps.DirectionsService();
-  // const directionsRenderer = new google.maps.DirectionsRenderer({
-  //   draggable: false,
-  //   map,
-  //   panel: document.getElementById("map"),
-  // });
-
-  // displayRoute(
-  //   // Replace with two stations later 
-  //   { lat: 40.717805, lng: -74.014072 }, 
-  //   { lat: 40.708455, lng: -73.999741 },
-  //   directionsService,
-  //   directionsRenderer
-  // );
-
   const stationMarkers = await showStations().then();
   // console.log(stationMarkers);
-  // let button = document.getElementById("clear_markers");
-  // button.addEventListener("click", function() {clearMarkers(stationMarkers);});
+  var map_object = map;
+  if (! show_markers){
+    map_object = null;
+  }
+  let button = document.getElementById("clear_markers");
+  button.addEventListener("click", function() {changeMarkers(stationMarkers);});
 } 
 
-var clearMarkers = (markers) => {
+var changeMarkers = (markers,) => {
+  show_markers = ! show_markers;
   var marker;
   for (index in markers){
     marker = markers[index];
-    marker.setMap(null);
+    // marker.setMap(null);
+    if (show_markers) {
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  }
+  if (show_markers) {
+    document.getElementById('clear_markers').innerHTML = 'Clear station markers';
+  } else {
+    document.getElementById('clear_markers').innerHTML = 'Show station markers';
   }
 }
 
@@ -107,39 +106,8 @@ var makeMarker = (map, lat1, lng1, info, id) => {
   return marker;
 }
 
-function displayRoute(origin, destination, service, display) {
-  service
-    .route({
-      origin: origin,
-      destination: destination,
-      travelMode: google.maps.TravelMode.BICYCLING,
-    })
-    .then((result) => {
-      display.setDirections(result);
-    })
-    .catch((e) => {
-      alert("Could not display directions due to: " + e);
-    });
-}
-
-function computeTotalDistance(result) {
-  let total = 0;
-  const myroute = result.routes[0];
-
-  if (!myroute) {
-    return;
-  }
-
-  for (let i = 0; i < myroute.legs.length; i++) {
-    total += myroute.legs[i].distance.value;
-  }
-
-  total = total / 1000;
-  document.getElementById("total").innerHTML = total + " km";
-}
-
-let button_map = document.getElementById("button_map");
-let button = document.getElementById("submit");
-button_map.addEventListener("click", initMap);
+// let button_map = document.getElementById("button_map");
+// let button = document.getElementById("submit");
+// button_map.addEventListener("click", initMap);
 window.initMap = initMap;
 initMap()

@@ -16,14 +16,13 @@
 <body>
     <h1><a href="/">Citibike Routes Map for 2022</a></h1>
 
-
     <form method="post" id="query">
       <select id="results">
         {% for result in results %}
           <option value="{{option_values[loop.index]}}">{{result}}</option>
         {% endfor %}
-        <!-- <option value=""></option> -->
       </select>
+	  <input type="submit">
     </form>
 
     <button id="button_map">click here for map</button>
@@ -34,7 +33,23 @@
 	<span hidden id="api-key">{{key}}</span>
 </body>
 
-	<script src="../static/js/map.js"></script>
+  <script>
+    window.onload = function() {
+			document.getElementById("submit").onclick = doWork;
+		}
+
+    function doWork() {
+			document.getElementById("submit").setAttribute("disabled",true);
+      var result = document.getElementById("results").value.split(",")
+      var route = {
+        "start_lat": result[0], 
+        "start lng": result[1],
+        "end_lat": result[2],
+        "end_lng": result[3],
+      }
+    } 
+  </script>
+	<script src="../static/js/map_routes.js"></script>
 	<script src="../static/js/table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>
