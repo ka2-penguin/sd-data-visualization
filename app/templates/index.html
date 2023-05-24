@@ -79,7 +79,6 @@
 						</div>
 
 						<hr>
-
 						<input class="coolbutton" type="reset" value="Reset" id="reset">
 						<input class="coolbutton" type="submit" value="Submit" id="submit">
 					</form>
@@ -95,15 +94,18 @@
     
 
     <canvas width="100%" height="500" id="playground"></canvas>
+	<span hidden id="api-key">{{key}}</span>
 </body>
 
 	<!-- JS linking -->
   <script type="text/javascript">
+	var already_submitted = false;
     window.onload = function() {
-      document.getElementById("submit").onclick = doWork;
+		document.getElementById("submit").onclick = doWork;
     } 
 
     function doWork() {
+		document.getElementById("submit").setAttribute("disabled",true);
 		console.log($("#filters").serialize());
 		// ajax the JSON to the server
 		var filters = {
@@ -137,6 +139,14 @@
 		// stop link reloading the page
 		event.preventDefault(); 
     }
+	var loading = () => {
+		// document.
+		// console.log('in loading');
+		var element = document.getElementById('loading');
+		element.innerHTML = "Loading...";
+	}
+	let submit_button = document.getElementById("submit");
+	submit_button.addEventListener("click", loading);
   	</script>
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>

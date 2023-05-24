@@ -30,48 +30,9 @@
     <div id="map"></div>
 
     <canvas width="100%" height="500" id="playground"></canvas>
+	<span hidden id="api-key">{{key}}</span>
 </body>
 
-	<!-- JS linking
-  <script type="text/javascript">
-    window.onload = function() {
-      document.getElementById("submit").onclick = doWork;
-    } 
-
-    function doWork() {
-		console.log($("#filters").serialize());
-		// ajax the JSON to the server
-		var filters = {
-	        "min_trip_duration": document.getElementById("min_trip_duration").value,
-	        "max_trip_duration": document.getElementById("max_trip_duration").value,
-	        "min_date": document.getElementById("min_date").value,
-	        "max_date": document.getElementById("max_date").value,
-	        "min_time": document.getElementById("min_time").value,
-	        "max_time": document.getElementById("max_time").value,
-	        // "is_member": document.getElementById("is_member").checked,
-          "is_member": document.getElementById("is_member").value,
-	        "start_station_id": document.getElementById("start_station_id").value,
-	        "end_station_id": document.getElementById("end_station_id").value,
-      	}
-
-	    $.ajax({
-			type: 'POST',
-			url: '/',
-			// data: JSON.stringify(cars),
-			data: JSON.stringify(filters),
-			success: function(data) { 
-			alert('data: ' + data);
-			},
-			// error: function() {
-			// alert("something went wrong")
-			// },
-			contentType: "application/json",
-			dataType: 'json'
-		});
-		// stop link reloading the page
-		event.preventDefault(); 
-    }
-  	</script> -->
 	<script src="../static/js/map.js"></script>
 	<script src="../static/js/table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
