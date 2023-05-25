@@ -111,7 +111,10 @@ var redraw = (title, labelX, labelY, data, max) => {
 	ctx.closePath();
 	ctx.font = (width / 60) + "px Arial";
 	ctx.fillText(max, 5*width/48 - 5*width/110, 73*height/96 - maxBoxHeight);
-
+	ctx.fillStyle=('rgb(50,50,255)');
+	ctx.fillText("casual", 8*width/48,5 * height / 24);
+	ctx.fillStyle=('rgb(255,0,0)');
+	ctx.fillText("member", 8*width/48,4 * height / 24);
 	for (var i = 0; i < data.length; i++){
 		//ctx.fillStyle = 'rgba(255,0,0,1)';
 		var gradient = ctx.createLinearGradient(0,3 * height / 4,0, 3 * height / 4 - ((data[i][1] / max) * maxBoxHeight));

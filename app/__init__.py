@@ -45,7 +45,7 @@ def prettier_results(data):
         if row[0] >= 60:
             time_string += str((row[0] % 3600) // 60) + ' min '
         time_string += str(row[0]%60) + ' sec ' 
-        new_data.append(f'{user_type}, rode on {date} {time} for {time_string}  {row[6]} {row[7]}')
+        new_data.append(f'{user_type}, rode on {date} {time} for {time_string} from station {row[6]} to station {row[7]}')
     return new_data
 
 if __name__ == "__main__":
