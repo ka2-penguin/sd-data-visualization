@@ -116,6 +116,13 @@ mayaM -- 2023-05-18 16:22
 - created custom icon representing docks
 ==============================================================
 
+DanielY -- 2023-05-03 : 2023-05-19
+--------------------------------------------------------------
+- worked on implementing the Google Maps API in JS
+- works on figuring out and understanding Ajax and JQuery
+(Both took a lot of trials and error so it took a while)
+==============================================================
+
 josephJ -- 2023-05-19 08:47
 --------------------------------------------------------------
 - notes for gallery walk
@@ -165,4 +172,10 @@ mayaM -- 2023-05-23 22:40
 - worked on hiding and showing markers using buttons
 - got trips routes to display from dropdown
 - some bugs involving sqlite queries fixed
+==============================================================
+
+DanielY -- 2023-05-03 : 2023-05-19
+--------------------------------------------------------------
+- did a lot of sql filtering work with Maya
+- worked on implementing the Google routes API in JS
 ==============================================================
